@@ -5,6 +5,6 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
 };
 
-module.exports={distDir: "dist"}
+
 
 export default nextConfig;
