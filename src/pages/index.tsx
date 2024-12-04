@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import React from 'react'
+import Modal from './Modal'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import img1 from '../assets/samples/IMG_8020.jpg'
@@ -11,22 +13,32 @@ import img7 from '../assets/samples/IMG_8027.jpg'
 import img8 from '../assets/samples/IMG_8028.jpg'
 
 export default function Home() {
+  // 顔写真の更新管理
   const [count, setCount] = useState(0)
   const samples = [img1, img2, img3, img4, img5, img6, img7, img8]
   const names = ["やべ", "あしざわ", "とまと", "もり", "やべ", "あしざわ", "もり", "とまと"]
 
+  // ルール説明のモーダルを管理
+  const [isOpenModal, setIsOpenModal] = React.useState(false);
+
   return (
     <div className={styles.container}>
-      <h1>Who?Name!</h1>
+      <h1 className='text-5xl'>Who?Name!</h1>
+      {/* --- ボタン --- */}
+      <button onClick={()=>setIsOpenModal(true)} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg">
+                ルール
+            </button>
       <div>
         <Image src={samples[count]} alt={`Sample ${count + 1}`}height={300} />
         <p>{names[count]}</p>
       </div>
       <div className={styles.card}>
-        <button onClick={() => setCount(Math.floor(Math.random() * 8))}>
+        <button onClick={() => setCount(Math.floor(Math.random() * 8))} className='p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg'>
           Next
         </button>
       </div>
+      {/* --- モーダル --- */}
+      <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
     </div>
   )
 }
