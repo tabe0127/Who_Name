@@ -166,3 +166,16 @@ a.secondary {
     filter: invert();
   }
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* ビューポート全体の高さを確保 */
+  text-align: center;
+}
+
+.card {
+  margin-top: 20px;
+}
