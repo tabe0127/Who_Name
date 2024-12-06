@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import img1 from '../assets/samples/IMG_8020.jpg'
@@ -9,6 +9,7 @@ import img5 from '../assets/samples/IMG_8024.jpg'
 import img6 from '../assets/samples/IMG_8025.jpg'
 import img7 from '../assets/samples/IMG_8027.jpg'
 import img8 from '../assets/samples/IMG_8028.jpg'
+import Upload from './upload';
 
 export default function Home() {
   const [count, setCount] = useState(0)
@@ -27,6 +28,7 @@ export default function Home() {
           Next
         </button>
       </div>
+      <Upload></Upload>
     </div>
   )
 }
