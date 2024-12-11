@@ -39,8 +39,8 @@ export default function Home() {
         }
         console.log(img)
       }} />
-      <div>
-        <Image src={img[count]} alt={`Sample ${count + 1}`}width={300} height={300} />
+      <div className='p-4'>
+        <Image src={img[count]} alt={`Sample ${count + 1}`} width={0} height={0} layout='responsive' className='max-h-96 max-w-full'/>
         {/* <p>{names[count]}</p> */}
       </div>
       <div className={styles.card}>
