@@ -47,7 +47,6 @@ export default function Modal({ isOpenModal, setIsOpenModal }: { isOpenModal: bo
                             <li>一番早く正確にあだ名を言えた人が、勝ち！</li>
                             <li>もし誰もあだ名を正確に思い出せない場合は、その写真にまた新しいあだ名をつけてゲームを続行しましょう。</li>
                         </ol>
-                        <h1>つまり、人間版「ナンジャモンジャ」です。</h1>
                         
 
                     </div>
