@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import React from 'react'
 import Modal from './Modal'
+import Hint from './Hint'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 // import img1 from '../assets/samples/IMG_8020.jpg'
@@ -24,6 +25,9 @@ export default function Home() {
   // ルール説明のモーダルを管理
   const [isOpenModal, setIsOpenModal] = React.useState(false);
 
+  // ルール説明のモーダルを管理
+  const [isOpenHint, setIsOpenHint] = React.useState(false);
+
   return (
     <div className={styles.container}>
       <h1 className='text-5xl'>Who?Name!</h1>
@@ -42,6 +46,7 @@ export default function Home() {
       <div>
         <Image src={img[count]} alt={`Sample ${count + 1}`}width={300} height={300} />
         {/* <p>{names[count]}</p> */}
+        <button onClick={()=>setIsOpenHint(true)} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg">名付けのヒント</button>
       </div>
       <div className={styles.card}>
         <button onClick={() => setCount(Math.floor(Math.random() * img.length))} className='p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg'>
@@ -50,6 +55,8 @@ export default function Home() {
       </div>
       {/* --- モーダル --- */}
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
+      {/* --- ヒント --- */}
+      <Hint isOpenHint={isOpenHint} setIsOpenHint={setIsOpenHint} />
     </div>
   )
 }
