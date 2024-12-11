@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import React from 'react'
 import Modal from './Modal'
 import Hint from './Hint'
@@ -37,6 +37,13 @@ export default function Home() {
     setTempName(''); // 名前入力をリセット
   };
 
+  const filePickerRef = useRef<HTMLInputElement>(null);
+  const showFolder = () => {
+    if (filePickerRef.current) {
+      filePickerRef.current.click();
+    }
+  };
+
   // ルール説明のモーダルを管理
   const [isOpenHint, setIsOpenHint] = React.useState(false);
 
@@ -69,9 +76,12 @@ export default function Home() {
         <input
           type="file"
           accept="image/*"
+          ref={filePickerRef}
           onChange={handleTempImgUpload}
           className="mb-2"
+          hidden
         />
+        <button type="button" onClick={showFolder} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg mx-2">写真をアップロードする</button>
 
         {/* プレビュー */}
         {tempImg && (
@@ -97,12 +107,14 @@ export default function Home() {
 
       {/* --- 表示 --- */}
       {entries.length > 0 && (
-        <div className="mt-4">
+        <div className="p-4">
           <Image
             src={entries[count].img}
             alt={`Sample ${count + 1}`}
             width={300}
             height={300}
+            layout='responsive'
+            className='max-h-72'
           />
           <p>{entries[count].name}</p>
         </div>
