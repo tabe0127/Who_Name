@@ -3,53 +3,121 @@ import React from 'react'
 import Modal from './Modal'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-// import img1 from '../assets/samples/IMG_8020.jpg'
-// import img2 from '../assets/samples/IMG_8021.jpg'
-// import img3 from '../assets/samples/IMG_8022.jpg'
-// import img4 from '../assets/samples/IMG_8023.jpg'
-// import img5 from '../assets/samples/IMG_8024.jpg'
-// import img6 from '../assets/samples/IMG_8025.jpg'
-// import img7 from '../assets/samples/IMG_8027.jpg'
-// import img8 from '../assets/samples/IMG_8028.jpg'
 
 export default function Home() {
-  // 顔写真の更新管理
-  const [count, setCount] = useState(0)
-  // const samples = [img1, img2, img3, img4, img5, img6, img7, img8]
-  // const names = ["やべ", "あしざわ", "とまと", "もり", "やべ", "あしざわ", "もり", "とまと"]
+  // 顔写真と名前の管理
+  const [entries, setEntries] = useState<{ img: string; name: string }[]>([]);
+  const [count, setCount] = useState(0); // 現在表示中のエントリインデックス
 
-  // 顔写真のアップロード
-  const [img, setImg] = useState<string[]>([])
+  // 登録フォームの状態管理
+  const [tempImg, setTempImg] = useState<string | null>(null);
+  const [tempName, setTempName] = useState('');
 
-  // ルール説明のモーダルを管理
-  const [isOpenModal, setIsOpenModal] = React.useState(false);
+  // モーダルの管理
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  // 一時的な画像アップロード処理
+  const handleTempImgUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    const tempFile = e.target.files[0];
+    const tempImgUrl = window.URL.createObjectURL(tempFile);
+    setTempImg(tempImgUrl);
+  };
+
+  // エントリ登録処理
+  const handleRegisterEntry = () => {
+    if (!tempImg || tempName.trim() === '') {
+      alert('写真と名前の両方を入力してください！');
+      return;
+    }
+
+    setEntries([...entries, { img: tempImg, name: tempName }]);
+    setTempImg(null); // 一時的な画像をリセット
+    setTempName(''); // 名前入力をリセット
+  };
 
   return (
     <div className={styles.container}>
-      <h1 className='text-5xl'>Who?Name!</h1>
+      <h1 className="text-5xl">Who?Name!</h1>
+
       {/* --- ボタン --- */}
-      <button onClick={()=>setIsOpenModal(true)} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg">ルール</button>
-      <input type="file" accept='image/*' onChange={(e)=>{
-        if (!e.target.files) return;
-        const temp = e.target.files[0]
-        if (img.length == 0){
-          setImg([window.URL.createObjectURL(temp)])  
-        }else{
-          setImg([...img, window.URL.createObjectURL(temp)])
-        }
-        console.log(img)
-      }} />
-      <div>
-        <Image src={img[count]} alt={`Sample ${count + 1}`}width={300} height={300} />
-        {/* <p>{names[count]}</p> */}
-      </div>
-      <div className={styles.card}>
-        <button onClick={() => setCount(Math.floor(Math.random() * img.length))} className='p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg'>
-          Next
+      <button
+        onClick={() => setIsOpenModal(true)}
+        className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg"
+      >
+        ルール
+      </button>
+
+      {/* --- 一括登録フォーム --- */}
+      <div className="my-4 p-4 border rounded-lg shadow-md">
+        <h2 className="text-2xl mb-2">写真と名前を登録</h2>
+
+        {/* 名前入力 */}
+        <input
+          type="text"
+          value={tempName}
+          onChange={(e) => setTempName(e.target.value)}
+          placeholder="名前を入力"
+          className="mb-2 p-2 border rounded-md w-full"
+        />
+
+        {/* ファイルアップロード */}
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleTempImgUpload}
+          className="mb-2"
+        />
+
+        {/* プレビュー */}
+        {tempImg && (
+          <div className="mb-2">
+            <Image
+              src={tempImg}
+              alt="Preview"
+              width={150}
+              height={150}
+              className="rounded-lg"
+            />
+          </div>
+        )}
+
+        {/* 登録ボタン */}
+        <button
+          onClick={handleRegisterEntry}
+          className="p-2 bg-green-500 text-white rounded-md shadow-lg"
+        >
+          登録
         </button>
       </div>
+
+      {/* --- 表示 --- */}
+      {entries.length > 0 && (
+        <div className="mt-4">
+          <Image
+            src={entries[count].img}
+            alt={`Sample ${count + 1}`}
+            width={300}
+            height={300}
+          />
+          <p>{entries[count].name}</p>
+        </div>
+      )}
+
+      {/* --- Nextボタン --- */}
+      {entries.length > 0 && (
+        <div className={styles.card}>
+          <button
+            onClick={() => setCount(Math.floor(Math.random() * entries.length))}
+            className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg"
+          >
+            Next
+          </button>
+        </div>
+      )}
+
       {/* --- モーダル --- */}
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
     </div>
-  )
+  );
 }
