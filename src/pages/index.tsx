@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import React from 'react'
 import Modal from './Modal'
 import Image from 'next/image'
@@ -20,16 +20,22 @@ export default function Home() {
 
   // 顔写真のアップロード
   const [img, setImg] = useState<string[]>([])
-
+  const filePickerRef = useRef<HTMLInputElement>(null);
+  const showFolder = () => {
+    if (filePickerRef.current) {
+      filePickerRef.current.click();
+    }
+  };
+  
   // ルール説明のモーダルを管理
   const [isOpenModal, setIsOpenModal] = React.useState(false);
 
   return (
     <div className={styles.container}>
       <h1 className='text-5xl'>Who?Name!</h1>
-      {/* --- ボタン --- */}
+      {/* --- ルールボタン --- */}
       <button onClick={()=>setIsOpenModal(true)} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg">ルール</button>
-      <input type="file" accept='image/*' onChange={(e)=>{
+      <input type="file" accept='image/*' ref={filePickerRef} hidden onChange={(e)=>{
         if (!e.target.files) return;
         const temp = e.target.files[0]
         if (img.length == 0){
@@ -39,8 +45,9 @@ export default function Home() {
         }
         console.log(img)
       }} />
+      <button type="button" onClick={showFolder} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg">写真をアップロードする</button>
       <div className='p-4'>
-        <Image src={img[count]} alt={`Sample ${count + 1}`} width={0} height={0} layout='responsive' className='max-h-96 max-w-full'/>
+        <Image src={img[count]} alt={""} width={0} height={0} layout='responsive' className='max-h-96 max-w-full'/>
         {/* <p>{names[count]}</p> */}
       </div>
       <div className={styles.card}>
@@ -48,7 +55,7 @@ export default function Home() {
           Next
         </button>
       </div>
-      {/* --- モーダル --- */}
+      {/* --- ルールモーダル --- */}
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
     </div>
   )
