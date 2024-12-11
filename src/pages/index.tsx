@@ -8,25 +8,32 @@ export default function Home() {
   // 顔写真と名前の管理
   const [entries, setEntries] = useState<{ img: string; name: string }[]>([]);
   const [count, setCount] = useState(0); // 現在表示中のエントリインデックス
-  const [name, setName] = useState(''); // 名前の入力
+
+  // 登録フォームの状態管理
+  const [tempImg, setTempImg] = useState<string | null>(null);
+  const [tempName, setTempName] = useState('');
 
   // モーダルの管理
-  const [isOpenModal, setIsOpenModal] = React.useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
-  // エントリを追加する処理
-  const handleAddEntry = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // 一時的な画像アップロード処理
+  const handleTempImgUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
-
     const tempFile = e.target.files[0];
     const tempImgUrl = window.URL.createObjectURL(tempFile);
+    setTempImg(tempImgUrl);
+  };
 
-    if (name.trim() === '') {
-      alert('名前を入力してください！');
+  // エントリ登録処理
+  const handleRegisterEntry = () => {
+    if (!tempImg || tempName.trim() === '') {
+      alert('写真と名前の両方を入力してください！');
       return;
     }
 
-    setEntries([...entries, { img: tempImgUrl, name }]);
-    setName(''); // 入力フィールドをリセット
+    setEntries([...entries, { img: tempImg, name: tempName }]);
+    setTempImg(null); // 一時的な画像をリセット
+    setTempName(''); // 名前入力をリセット
   };
 
   return (
@@ -41,26 +48,52 @@ export default function Home() {
         ルール
       </button>
 
-      {/* 名前入力フォーム */}
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="名前を入力"
-        className="my-2 p-2 border rounded-md"
-      />
+      {/* --- 一括登録フォーム --- */}
+      <div className="my-4 p-4 border rounded-lg shadow-md">
+        <h2 className="text-2xl mb-2">写真と名前を登録</h2>
 
-      {/* ファイルアップロード */}
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleAddEntry}
-        className="my-2"
-      />
+        {/* 名前入力 */}
+        <input
+          type="text"
+          value={tempName}
+          onChange={(e) => setTempName(e.target.value)}
+          placeholder="名前を入力"
+          className="mb-2 p-2 border rounded-md w-full"
+        />
 
-      {/* 表示 */}
+        {/* ファイルアップロード */}
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleTempImgUpload}
+          className="mb-2"
+        />
+
+        {/* プレビュー */}
+        {tempImg && (
+          <div className="mb-2">
+            <Image
+              src={tempImg}
+              alt="Preview"
+              width={150}
+              height={150}
+              className="rounded-lg"
+            />
+          </div>
+        )}
+
+        {/* 登録ボタン */}
+        <button
+          onClick={handleRegisterEntry}
+          className="p-2 bg-green-500 text-white rounded-md shadow-lg"
+        >
+          登録
+        </button>
+      </div>
+
+      {/* --- 表示 --- */}
       {entries.length > 0 && (
-        <div>
+        <div className="mt-4">
           <Image
             src={entries[count].img}
             alt={`Sample ${count + 1}`}
@@ -71,17 +104,17 @@ export default function Home() {
         </div>
       )}
 
-      {/* Nextボタン */}
-      <div className={styles.card}>
-        <button
-          onClick={() =>
-            setCount(Math.floor(Math.random() * entries.length))
-          }
-          className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg"
-        >
-          Next
-        </button>
-      </div>
+      {/* --- Nextボタン --- */}
+      {entries.length > 0 && (
+        <div className={styles.card}>
+          <button
+            onClick={() => setCount(Math.floor(Math.random() * entries.length))}
+            className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg"
+          >
+            Next
+          </button>
+        </div>
+      )}
 
       {/* --- モーダル --- */}
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
