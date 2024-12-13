@@ -44,7 +44,7 @@ export default function Home() {
     }
   };
 
-  // ルール説明のモーダルを管理
+  // 遊び方説明のモーダルを管理
   const [isOpenHint, setIsOpenHint] = React.useState(false);
 
   return (
@@ -56,7 +56,7 @@ export default function Home() {
         onClick={() => setIsOpenModal(true)}
         className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg"
       >
-        ルール
+        遊び方
       </button>
 
       {/* --- 一括登録フォーム --- */}
