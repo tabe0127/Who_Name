@@ -20,6 +20,9 @@ export default function Home() {
   // スタート画面の表示のON・OFF
   const [showStartScreen, setShowStartScreen] = useState(true);
 
+  // スタート画面上のStartボタンを表示するタイミングを検討する時間
+  const [showStartScreen_StartButton, setShowStartScreen_StartButton] = useState(false);
+
   // ゲーム画面の表示のON・OFF
   const [showGameScreen, setShowGameScreen] = useState(false);
 
@@ -41,9 +44,15 @@ export default function Home() {
     setEntries([...entries, { img: tempImg, name: tempName }]);
     setTempImg(null); // 一時的な画像をリセット
     setTempName(''); // 名前入力をリセット
-    setShowStartScreen(false);
-    setShowGameScreen(true);
+    setShowStartScreen_StartButton(true);  // ゲームスタートボタンを表示
   };
+
+  // ゲームスタート処理
+  const GameStart = () => {
+    setShowStartScreen(false);
+    setShowStartScreen_StartButton(false);
+    setShowGameScreen(true);
+  }
 
   const filePickerRef = useRef<HTMLInputElement>(null);
   const showFolder = () => {
@@ -117,6 +126,19 @@ export default function Home() {
         </div>
       )}
 
+      {/* スタート画面からゲーム画面に遷移するためのボタン */}
+      {showStartScreen_StartButton && (
+        <div>
+          {/* 登録ボタン */}
+          <button
+            onClick={GameStart}
+            className="p-2 bg-red-500 text-white rounded-md shadow-lg"
+          >
+            Game Start
+          </button>
+        </div>
+      )}
+
       {/* ゲーム開始時に表示する画面 */}
       {showGameScreen && (
         <div>
@@ -155,7 +177,6 @@ export default function Home() {
         <Hint isOpenHint={isOpenHint} setIsOpenHint={setIsOpenHint} />
         </div>
       )}
-
       
     </div>
   );
