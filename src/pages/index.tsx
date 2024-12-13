@@ -170,14 +170,13 @@ export default function Home() {
             <button onClick={()=>setIsOpenHint(true)} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg">名付けのヒント</button>
           </div>
         )}
-        
-        {/* --- モーダル --- */}
-        <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
-        {/* --- ヒント --- */}
-        <Hint isOpenHint={isOpenHint} setIsOpenHint={setIsOpenHint} />
         </div>
       )}
-      
+
+      {/* --- モーダル --- */}
+      <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
+      {/* --- ヒント --- */}
+      <Hint isOpenHint={isOpenHint} setIsOpenHint={setIsOpenHint} />
     </div>
   );
 }
