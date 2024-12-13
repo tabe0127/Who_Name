@@ -49,9 +49,9 @@ export default function Modal({ isOpenModal, setIsOpenModal }: { isOpenModal: bo
                             <li>4人以下なら1人3枚、5人以上なら1人2枚推奨</li>
                             <li>全員分の写真とが集まったらゲームスタート！</li>
                             <div className="flex">
-                              <Image src={soraki} alt={"soraki"} width={220} height={100} />
-                              <Image src={tabe} alt={"tabe"} width={220} height={100} />
-                              <Image src={ise} alt={"ise"} width={220} height={100} />
+                              <Image src={soraki} alt={"soraki"} width={110}  />
+                              <Image src={tabe} alt={"tabe"} width={110} />
+                              <Image src={ise} alt={"ise"} width={110} />
                             </div>
                         </ol>
                         <h2 className="text-2xl">ゲームのルール</h2><br />
