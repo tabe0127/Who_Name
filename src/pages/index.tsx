@@ -64,6 +64,15 @@ export default function Home() {
   // 遊び方説明のモーダルを管理
   const [isOpenHint, setIsOpenHint] = React.useState(false);
 
+  // カードをめくるSE
+  const playSound = () => {
+    const audio = new Audio('/sounds/card-flip.mp3');
+    audio.play().catch((error) => {
+      console.error('効果音の再生に失敗しました:', error);
+    });
+  };
+  
+
   return (
     <div className={styles.container}>
       <h1 className="text-5xl">Who?Name!</h1>
@@ -161,7 +170,10 @@ export default function Home() {
         {entries.length > 0 && (
           <div className={styles.card}>
             <button
-              onClick={() => setCount(Math.floor(Math.random() * entries.length))}
+              onClick={() => {
+                setCount(Math.floor(Math.random() * entries.length)); // カウント設定
+                playSound(); // 効果音を再生
+              }}
               className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
             >
               Next
