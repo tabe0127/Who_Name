@@ -1,18 +1,27 @@
 import { useState } from 'react'
 import React from 'react'
 import styles from '../styles/Home.module.css'
-import Start from './Start'
-import Hint from './Hint'
+import Start from './Home'
+import InputName from './InputName'
+import ImageUpload from './ImageUpload'
+import Game from './Game'
 
 export default function Home() {
-  const [sceneController, setSceneController] = useState<string>('Start')
+  // どの画面を表示するかの管理
+  const [sceneController, setSceneController] = useState<string>('Home')
+
+  // 顔写真と名前の管理
+  const [entries, setEntries] = useState<{[Name: string]: string[]}>({'Ebi': []});
 
   return (
     <div className={styles.container}>
-      <h1 className="text-5xl">Who?Name!</h1>
+      <h1 className="text-5xl mt-6">Who?Name!</h1>
 
-      {sceneController=='Start' ? <Start setSceneController={setSceneController}></Start>: <></>}
-      {sceneController=='Name' ? <Hint></Hint>:<></>}
+      {sceneController=='Home' ? <Start setSceneController={setSceneController}></Start>: <></>}
+      {sceneController=='Name' ? <InputName setSceneController={setSceneController} entries={entries} setEntries={setEntries}></InputName>:<></>}
+      {sceneController=='ImageUpload' ? <ImageUpload setSceneController={setSceneController}  entries={entries} setEntries={setEntries} nameSelected='Ebi' ></ImageUpload>:<></>}
+      {sceneController=='Game' ? <Game setSceneController={setSceneController}  entries={entries} ></Game>:<></>}
+
       <p>{sceneController}</p>
 
     </div>

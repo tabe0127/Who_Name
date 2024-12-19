@@ -3,10 +3,7 @@ import soraki from '../assets/samples/IMG_8278.jpg'
 import tabe from '../assets/samples/IMG_8279.jpg'
 import ise from '../assets/samples/IMG_8281.jpg'
 
-export default function Start({ setSceneController }: { setSceneController : React.Dispatch<React.SetStateAction<string>> }){
-  const sceneTransition = (scene: string) => {
-    setSceneController(scene)
-  }
+export default function Home({ setSceneController }: { setSceneController : React.Dispatch<React.SetStateAction<string>> }){
 
   return(
     <>
@@ -22,7 +19,7 @@ export default function Start({ setSceneController }: { setSceneController : Rea
           <Image src={ise} alt={"ise"} width={110} />
         </div>
     </ol>
-    <h2 className="text-2xl">ゲームのルール</h2><br />
+    <h2 className="text-2xl mt-5">ゲームのルール</h2><br />
     <ol style={{ listStyleType: "decimal" , textAlign: "left", marginLeft: "20px" }}>
         <li>一人ずつ順番にNextボタンを押して写真を一枚めくるのを繰り返します。</li>
         <li>めくった写真が初めて出る写真なら、めくった人は写真に写っている人に<b>名前に関連するあだ名</b>をつけます。</li>
@@ -32,7 +29,7 @@ export default function Start({ setSceneController }: { setSceneController : Rea
         <li>もし誰もあだ名を正確に思い出せない場合は、その写真にまた新しいあだ名をつけてゲームを続行しましょう。</li>
     </ol>
     <button
-      onClick={() => sceneTransition('Name')}
+      onClick={() => setSceneController('Name')}
       className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
     >
       新規ゲームスタート
