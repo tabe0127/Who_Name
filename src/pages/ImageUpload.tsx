@@ -4,7 +4,16 @@ import soraki from '../assets/samples/IMG_8278.jpg'
 import tabe from '../assets/samples/IMG_8279.jpg'
 import ise from '../assets/samples/IMG_8281.jpg'
 
-export default function ImageUpload({ setSceneController, entries, setEntries, nameSelected }: { setSceneController : React.Dispatch<React.SetStateAction<string>>, entries: {[Name: string]: string[]}, setEntries : React.Dispatch<React.SetStateAction<{[Name: string]: string[]}>>, nameSelected : string }){
+type entries = {
+  id: number;
+  name: string;
+  imgURL: string[];
+}
+
+export default function ImageUpload({ setSceneController, entries, setEntries }: { setSceneController : React.Dispatch<React.SetStateAction<string>>, entries: entries[], setEntries : React.Dispatch<React.SetStateAction<entries[]>> }){
+
+  // entriesの何番目の要素かを管理
+  const [indexId, setIndexId] = useState<number>(0);
 
   // 一時的な画像を管理
   const [tempImg, setTempImg] = useState<string | null>(null);
@@ -17,21 +26,15 @@ export default function ImageUpload({ setSceneController, entries, setEntries, n
     setTempImg(tempImgUrl);
   };
 
-  // 値を追加または更新する関数
-  const addToEntries = (key: string, value: string) => {
-    setEntries((prevEntries) => ({
-      ...prevEntries,
-      [key]: key in prevEntries ? [...prevEntries[key], value] : [value],
-    }));
-  };
-
   // 画像登録処理
   const handleRegisterEntry = () => {
     if (tempImg == null) {
-      alert('写真を1枚以上アップロードしてください');
+      alert('写真をアップロードしてください');
       return
     }
-    addToEntries(nameSelected, tempImg);
+    setEntries((prevEntries) => (
+      prevEntries.map((prevEntry) => (prevEntry.id === entries[indexId].id ? {...prevEntry, imgURL: [...prevEntry.imgURL, tempImg]} : prevEntry))
+    ));
     setTempImg(null); // 一時的な画像をリセット
   };
 
@@ -42,10 +45,18 @@ export default function ImageUpload({ setSceneController, entries, setEntries, n
     }
   };
 
+  const nextPlayer = () => {
+    if(entries[indexId].imgURL.length < 2){
+      alert('写真を2枚以上登録してください');
+    } else {
+      setIndexId((prev) => (prev + 1));
+    }
+  }
+
   return(
     <>
     <ol style={{ listStyleType: "decimal" , textAlign: "left", marginLeft: "20px" }} className="mt-4">
-      <ul><button type="button"className="p-2 text-white font-bold bg-blue-400 rounded-xl shadow-lg">写真を追加する</button>ボタンを押して<br /><span className="font-bold">いろんなポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{nameSelected}</span>さんの写真をアップロードしてね！</ul>
+      <ul><button type="button"className="p-2 text-white font-bold bg-blue-400 rounded-xl shadow-lg">写真を追加する</button>ボタンを押して<br /><span className="font-bold">いろんなポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries[indexId].name}</span>さんの写真をアップロードしてね！</ul>
       <ul>※プレイ人数が4人以下なら1人3枚、5人以上なら1人2枚推奨</ul>
       <ul>全員分の写真が集まったらゲームスタート！</ul>
     </ol>
@@ -94,10 +105,10 @@ export default function ImageUpload({ setSceneController, entries, setEntries, n
     )}
 
     {/* 画像プレビュー */}
-    {entries[nameSelected].length > 0 && <p className="font-semibold">追加された写真</p>}
-    {entries[nameSelected].length > 0 && (
+    {entries[indexId].imgURL.length > 0 && <p className="font-semibold">追加された写真</p>}
+    {entries[indexId].imgURL.length > 0 && (
       <div style={{display: 'flex', flexDirection: 'row'}}>
-        {entries[nameSelected].map((img, index) => 
+        {entries[indexId].imgURL.map((img, index) => 
         <div className="mb-2" key={index}>
           {
             <Image
@@ -111,14 +122,21 @@ export default function ImageUpload({ setSceneController, entries, setEntries, n
         </div>
         )}
     </div>)}
+    {indexId < entries.length - 1 &&
+    <button
+      onClick={nextPlayer}
+      className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
+    >
+      次へ
+    </button>}
     <button
       onClick={() => setSceneController('Name')}
       className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
     >
-      {entries[nameSelected].length == 0 && "戻る"}
-      {entries[nameSelected].length > 0 && "プレイヤーを追加する"}
+      {entries[indexId].imgURL.length == 0 && "戻る"}
+      {entries[indexId].imgURL.length > 0 && "プレイヤーを追加する"}
     </button>
-    {Object.keys(entries).length > 0 && entries[nameSelected].length > 0 &&
+    { indexId === entries.length - 1 && entries[indexId].imgURL.length >= 2 &&
     <button
     onClick={() => setSceneController('Game')}
     className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"

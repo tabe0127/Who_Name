@@ -2,16 +2,20 @@ import Image from "next/image"
 import Hint from "./Hint"
 import { useState } from "react";
 
-export default function Game({ setSceneController, entries }: { setSceneController : React.Dispatch<React.SetStateAction<string>>, entries: {[Name: string]: string[]} }){
+type entries = {
+  id: number;
+  name: string;
+  imgURL: string[];
+}
+
+export default function Game({ setSceneController, entries }: { setSceneController : React.Dispatch<React.SetStateAction<string>>, entries: entries[] }){
   // 遊び方説明のモーダルを管理
   const [isOpenHint, setIsOpenHint] = useState<boolean>(false);
 
-  function getRandomEntry(obj: { [key: string]: string[] }): {name: string, img: string} {
-    const keys = Object.keys(obj);
-    const randomKey = keys[Math.floor(Math.random() * keys.length)];
-    const randomArray = obj[randomKey];
-    const randomValue = randomArray[Math.floor(Math.random() * randomArray.length)];
-    return {name: randomKey, img: randomValue};
+  function getRandomEntry(obj: entries[] ): {name: string, img: string} {
+    const randomIndex = Math.floor(Math.random() * obj.length);
+    const randomImg = obj[randomIndex].imgURL[Math.floor(Math.random() * obj[randomIndex].imgURL.length)]
+    return {name: obj[randomIndex].name, img: randomImg};
   }
   
   const [randomEntry, setRandomEntry] = useState<{name: string, img: string}>(getRandomEntry(entries))
