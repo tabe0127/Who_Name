@@ -35,7 +35,7 @@ export default function InputName({
   };
 
   // 名前が一つでも入力されているか確認
-  const isSubmitDisabled = entries.every(({ name }) => name.trim() === '');
+  const isSubmitDisabled = entries?.every(({ name }) => name.trim() === '');
 
   return (
     <div style={{ margin: '20px', padding: '10px' }}>
@@ -51,7 +51,7 @@ export default function InputName({
       >
         覚えてほしい名前(本名など)で入力してね
       </p>
-      {entries.map(({ id, name }) => (
+      {entries?.map(({ id, name }) => (
         <div
           key={id}
           style={{ display: 'flex', alignItems: 'center', gap: '10px' }}

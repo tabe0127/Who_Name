@@ -56,7 +56,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
   return(
     <>
     <ol style={{ listStyleType: "decimal" , textAlign: "left", marginLeft: "20px" }} className="mt-4">
-      <ul><button type="button"className="p-2 text-white font-bold bg-blue-400 rounded-xl shadow-lg">写真を追加する</button>ボタンを押して<br /><span className="font-bold">いろんなポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries[indexId].name}</span>さんの写真をアップロードしてね！</ul>
+      <ul><button type="button"className="p-2 text-white font-bold bg-blue-400 rounded-xl shadow-lg">写真を追加する</button>ボタンを押して<br /><span className="font-bold">いろんなポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries?.[indexId].name}</span>さんの写真をアップロードしてね！</ul>
       <ul>※プレイ人数が4人以下なら1人3枚、5人以上なら1人2枚推奨</ul>
       <ul>全員分の写真が集まったらゲームスタート！</ul>
     </ol>
@@ -105,10 +105,10 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
     )}
 
     {/* 画像プレビュー */}
-    {entries[indexId].imgURL.length > 0 && <p className="font-semibold">追加された写真</p>}
-    {entries[indexId].imgURL.length > 0 && (
+    {entries?.[indexId].imgURL.length > 0 && <p className="font-semibold">追加された写真</p>}
+    {entries?.[indexId].imgURL.length > 0 && (
       <div style={{display: 'flex', flexDirection: 'row'}}>
-        {entries[indexId].imgURL.map((img, index) => 
+        {entries?.[indexId].imgURL.map((img, index) => 
         <div className="mb-2" key={index}>
           {
             <Image
@@ -122,7 +122,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
         </div>
         )}
     </div>)}
-    {indexId < entries.length - 1 &&
+    {indexId < entries?.length - 1 &&
     <button
       onClick={nextPlayer}
       className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
@@ -133,10 +133,10 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
       onClick={() => setSceneController('Name')}
       className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
     >
-      {entries[indexId].imgURL.length == 0 && "戻る"}
-      {entries[indexId].imgURL.length > 0 && "プレイヤーを追加する"}
+      {entries?.[indexId].imgURL.length == 0 && "戻る"}
+      {entries?.[indexId].imgURL.length > 0 && "プレイヤーを追加する"}
     </button>
-    { indexId === entries.length - 1 && entries[indexId].imgURL.length >= 2 &&
+    { indexId === entries?.length - 1 && entries?.[indexId].imgURL.length >= 2 &&
     <button
     onClick={() => setSceneController('Game')}
     className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
