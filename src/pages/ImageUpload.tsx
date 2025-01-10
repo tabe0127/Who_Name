@@ -10,6 +10,9 @@ type entries = {
   imgURL: string[];
 }
 
+// お題一覧
+// const ThemaList = ["趣味", "サークル", "好きなスポーツ", "好きな生き物", "好きなキャラクター"];
+
 export default function ImageUpload({ setSceneController, entries, setEntries }: { setSceneController : React.Dispatch<React.SetStateAction<string>>, entries: entries[], setEntries : React.Dispatch<React.SetStateAction<entries[]>> }){
 
   // entriesの何番目の要素かを管理
@@ -66,6 +69,8 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
       <Image src={tabe} alt={"tabe"} width={110} />
       <Image src={ise} alt={"ise"} width={110} />
     </div>
+    <p className="mt-4">お題：「所属サークル」</p>
+    <p className="mt-4">「所属サークル」にちなんだ写真を撮ってください．</p>
 
     {/* ファイルアップロード */}
     <input
