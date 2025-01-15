@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Hint from "./Hint"
 import { useState } from "react";
+import CountdownTimer from "./Countdown";
 
 type entries = {
   id: number;
@@ -12,8 +13,8 @@ export default function Game({ setSceneController, entries }: { setSceneControll
   // 遊び方説明のモーダルを管理
   const [isOpenHint, setIsOpenHint] = useState<boolean>(false);
 
+  const audio = new Audio('/sounds/card-flip.mp3');
   const playSound = () => {
-    const audio = new Audio('/sounds/card-flip.mp3');
     audio.play().catch((error) =>{
       console.error('効果音の再生に失敗しました：',error);
     });
@@ -26,6 +27,25 @@ export default function Game({ setSceneController, entries }: { setSceneControll
   }
   
   const [randomEntry, setRandomEntry] = useState<{name: string, img: string}>(getRandomEntry(entries))
+
+  // CountdownTimer用
+  const [timeLeft, setTimeLeft] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const startCountdown = async() => {
+    console.log("開始");
+    setTimeLeft(3); // 3秒のカウントダウン
+    setIsRunning(true);
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    playSound(); // サウンド再生を呼び出す
+    setIsRunning(false); // カウントダウン停止
+    console.log("3秒後に実行");
+  }
+  audio.addEventListener('ended', () => {
+    // ここに音声再生後に実行したいコードを書きます
+    console.log('音声再生が終了しました');
+    // 他の処理を追加
+    setRandomEntry(getRandomEntry(entries)); // エントリーを更新
+  }, { once: true });
 
   return(
     <>
@@ -48,30 +68,16 @@ export default function Game({ setSceneController, entries }: { setSceneControll
         />
         <p className="text-4xl text-amber-300 font-bold">{randomEntry.name}</p>
       </div>
-
-      <div>
-        初めて出た人の場合：この人の<b>あだ名</b>をつけよう！
-      </div>
-
-      <br></br>
-
-      <div>
-        再度出てきた場合：この人の<b>本名</b>と<b>あだ名</b>を素早く叫ぼう！
-      </div>
-
-      <br></br>
+      <CountdownTimer timeLeft={timeLeft} setTimeLeft={setTimeLeft} isRunning={isRunning} ></CountdownTimer>
 
       {/* --- Nextボタン --- */}
       <div className="flex flex-col">
         <button
-        onClick={() => {
-          playSound(); // サウンド再生を呼び出す
-          setRandomEntry(getRandomEntry(entries)); // エントリーを更新
-          }}
+        onClick={startCountdown}
           className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
-  >
-    Next
-  </button>
+        >
+          Next
+        </button>
         {/* --- ヒントボタン --- */}
         <button onClick={()=>setIsOpenHint(true)} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg">名付けのヒント</button>
       </div>
