@@ -12,6 +12,13 @@ export default function Game({ setSceneController, entries }: { setSceneControll
   // 遊び方説明のモーダルを管理
   const [isOpenHint, setIsOpenHint] = useState<boolean>(false);
 
+  const playSound = () => {
+    const audio = new Audio('/sounds/card-flip.mp3');
+    audio.play().catch((error) =>{
+      console.error('効果音の再生に失敗しました：',error);
+    });
+  }; 
+
   function getRandomEntry(obj: entries[] ): {name: string, img: string} {
     const randomIndex = Math.floor(Math.random() * obj?.length);
     const randomImg = obj?.[randomIndex].imgURL[Math.floor(Math.random() * obj?.[randomIndex].imgURL.length)]
@@ -45,11 +52,14 @@ export default function Game({ setSceneController, entries }: { setSceneControll
       {/* --- Nextボタン --- */}
       <div className="flex flex-col">
         <button
-          onClick={() => setRandomEntry(getRandomEntry(entries))}
+        onClick={() => {
+          playSound(); // サウンド再生を呼び出す
+          setRandomEntry(getRandomEntry(entries)); // エントリーを更新
+          }}
           className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
-        >
-          Next
-        </button>
+  >
+    Next
+  </button>
         {/* --- ヒントボタン --- */}
         <button onClick={()=>setIsOpenHint(true)} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg">名付けのヒント</button>
       </div>
