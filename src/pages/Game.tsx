@@ -39,7 +39,7 @@ export default function Game({ setSceneController, entries }: { setSceneControll
           layout='responsive'
           className='max-h-72'
         />
-        <p>{randomEntry.name}</p>
+        <p className="text-4xl text-amber-300 font-bold">{randomEntry.name}</p>
       </div>
 
       {/* --- Nextボタン --- */}
