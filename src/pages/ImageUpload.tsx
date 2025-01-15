@@ -10,6 +10,9 @@ type entries = {
   imgURL: string[];
 }
 
+// お題一覧
+const themaList = ["趣味", "サークル", "好きなスポーツ", "好きな生き物", "好きなキャラクター"];
+
 export default function ImageUpload({ setSceneController, entries, setEntries }: { setSceneController : React.Dispatch<React.SetStateAction<string>>, entries: entries[], setEntries : React.Dispatch<React.SetStateAction<entries[]>> }){
 
   // entriesの何番目の要素かを管理
@@ -17,6 +20,12 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
 
   // 一時的な画像を管理
   const [tempImg, setTempImg] = useState<string | null>(null);
+
+  // 写真撮影時に提示するお題
+  const [thema, setThema] = useState<string | null>(themaList ? themaList[themaList.length - 1] : "");
+
+  // themaListの何番目の要素かを管理
+  const [indexId_thema, setIndexId_thema] = useState<number>(0);
 
   // 一時的な画像アップロード処理
   const handleTempImgUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,10 +62,23 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
     }
   }
 
+  // お題変更
+  const ThemaChange = () => {
+    if (themaList) {
+      if (indexId_thema < themaList.length - 1) {
+        setIndexId_thema(indexId_thema + 1);
+      }
+      else {
+        setIndexId_thema(0);
+      }
+      setThema(themaList[indexId_thema]);
+    }
+  }
+
   return(
     <>
     <ol style={{ listStyleType: "decimal" , textAlign: "left", marginLeft: "20px" }} className="mt-4">
-      <ul><button type="button"className="p-2 text-white font-bold bg-blue-400 rounded-xl shadow-lg">写真を追加する</button>ボタンを押して<br /><span className="font-bold">いろんなポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries?.[indexId].name}</span>さんの写真をアップロードしてね！</ul>
+      <ul><button type="button"className="p-2 text-white font-bold bg-blue-400 rounded-xl shadow-lg">写真を追加する</button>ボタンを押して<br /><span className="font-bold">いろんなポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries?.[indexId].name}</span>さんの写真を右隣の人が撮影・アップロードしてね！</ul>
       <ul>※プレイ人数が4人以下なら1人3枚、5人以上なら1人2枚推奨</ul>
       <ul>全員分の写真が集まったらゲームスタート！</ul>
     </ol>
@@ -66,6 +88,10 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
       <Image src={tabe} alt={"tabe"} width={110} />
       <Image src={ise} alt={"ise"} width={110} />
     </div>
+    <p className="mt-4">お題：「{thema}」</p>
+    <p className="mt-4">「{thema}」にちなんだ写真を撮ってください．</p>
+
+    <button type="button" onClick={ThemaChange} className="my-4 p-4 text-white font-bold bg-green-400 rounded-xl shadow-lg mx-2">お題を変更する</button>
 
     {/* ファイルアップロード */}
     <input
