@@ -20,9 +20,9 @@ export default function Game({ setSceneController, entries }: { setSceneControll
   }; 
 
   function getRandomEntry(obj: entries[] ): {name: string, img: string} {
-    const randomIndex = Math.floor(Math.random() * obj.length);
-    const randomImg = obj[randomIndex].imgURL[Math.floor(Math.random() * obj[randomIndex].imgURL.length)]
-    return {name: obj[randomIndex].name, img: randomImg};
+    const randomIndex = Math.floor(Math.random() * obj?.length);
+    const randomImg = obj?.[randomIndex].imgURL[Math.floor(Math.random() * obj?.[randomIndex].imgURL.length)]
+    return {name: obj?.[randomIndex].name, img: randomImg};
   }
   
   const [randomEntry, setRandomEntry] = useState<{name: string, img: string}>(getRandomEntry(entries))
