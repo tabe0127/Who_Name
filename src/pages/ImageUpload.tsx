@@ -78,7 +78,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
   return(
     <>
     <ol style={{ listStyleType: "decimal" , textAlign: "left", marginLeft: "20px" }} className="mt-4">
-      <ul><button type="button"className="p-2 text-white font-bold bg-blue-400 rounded-xl shadow-lg">写真を追加する</button>ボタンを押して<br /><span className="font-bold">いろんなポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries?.[indexId].name}</span>さんの写真を右隣の人が撮影・アップロードしてね！</ul>
+      <ul><button type="button"className="p-2 text-white font-bold bg-blue-400 rounded-xl shadow-lg">写真を追加する</button>ボタンを押して<br /><span className="font-bold">いろんなポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries?.[indexId].name}</span>さんの写真を<span className="text-amber-300 text-2xl font-bold">{indexId === 0 ? entries?.[entries.length - 1].name : entries?.[indexId - 1].name}</span>さんが撮影・アップロードしてね！</ul>
       <ul>※プレイ人数が4人以下なら1人3枚、5人以上なら1人2枚推奨</ul>
       <ul>全員分の写真が集まったらゲームスタート！</ul>
     </ol>
