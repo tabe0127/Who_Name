@@ -39,6 +39,14 @@ export default function InputName({
 
   return (
     <div style={{ margin: '20px', padding: '10px' }}>
+
+       <div style={{
+        border: "2px dashed pink",
+        padding: "10px",
+        marginBottom: "20px"
+      }}>
+
+
       <h1 style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center' }}>
         プレイヤーを登録
       </h1>
@@ -51,6 +59,11 @@ export default function InputName({
       >
         覚えてほしい名前(本名など)で入力してね
       </p>
+
+      </div>
+
+
+
       {entries?.map(({ id, name }) => (
         <div
           key={id}
