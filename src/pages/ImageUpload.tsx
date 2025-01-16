@@ -86,7 +86,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
 
     <div
   style={{
-    borderTop: "4px dotted white", // 点線のスタイル
+    borderTop: "4px dotted gray", // 点線のスタイル
     marginTop: "16px",            // 上の要素との間隔
     width: "100%",                // 横幅を画面全体に
   }}
@@ -124,7 +124,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
 
 <div
   style={{
-    borderTop: "4px dotted white", // 点線のスタイル
+    borderTop: "4px dotted gray", // 点線のスタイル
     marginTop: "16px",            // 上の要素との間隔
     width: "100%",                // 横幅を画面全体に
   }}
@@ -207,7 +207,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
 
 <div
   style={{
-    borderTop: "4px dotted white", // 点線のスタイル
+    borderTop: "4px dotted gray", // 点線のスタイル
     marginTop: "16px",            // 上の要素との間隔
     width: "100%",                // 横幅を画面全体に
   }}
