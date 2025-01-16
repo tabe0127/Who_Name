@@ -29,12 +29,7 @@ export default function Game({ setSceneController, entries }: { setSceneControll
 
   return(
     <>
-    <button
-      onClick={() => setSceneController('Home')}
-      className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
-    >
-      ゲームをやめる
-    </button>
+    
     <div>
       {/* --- 表示 --- */}
       <div className="p-4">
@@ -72,6 +67,16 @@ export default function Game({ setSceneController, entries }: { setSceneControll
   >
     Next
   </button>
+
+<button
+      onClick={() => setSceneController('Home')}
+      className="p-4 text-white font-bold bg-red-400 rounded-xl shadow-lg m-2"
+    >
+      ゲームをやめる
+    </button>
+
+
+
         {/* --- ヒントボタン --- */}
         <button onClick={()=>setIsOpenHint(true)} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg">名付けのヒント</button>
       </div>

@@ -224,12 +224,12 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
       className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
     >
       {entries?.[indexId].imgURL.length == 0 && "戻る"}
-      {entries?.[indexId].imgURL.length > 0 && "プレイヤー追加"}
+      {entries?.[indexId].imgURL.length > 0 && "新規プレイヤー追加"}
     </button>
     { indexId === entries?.length - 1 && entries?.[indexId].imgURL.length >= 2 &&
     <button
     onClick={() => setSceneController('Game')}
-    className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
+    className="p-4 text-white font-bold bg-red-400 rounded-xl shadow-lg m-2"
     >ゲーム開始</button>
     }
     </>
