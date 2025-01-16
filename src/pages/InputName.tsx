@@ -57,7 +57,8 @@ export default function InputName({
           margin: '5px 0',
         }}
       >
-        覚えてほしい名前(本名など)で入力してね
+        2人以上のプレイヤーの名前(本名など)を入力してね
+
       </p>
 
       </div>
@@ -92,14 +93,8 @@ export default function InputName({
       ))}
       <button
         onClick={handleAddName}
-        style={{
-          padding: '10px 20px',
-          backgroundColor: '#007BFF',
-          color: '#fff',
-          border: 'none',
-          cursor: 'pointer',
-        }}
-        className="mt-5"
+        
+        className="p-4 text-white font-bold bg-green-400 rounded-xl shadow-lg m-2"
       >
         ＋
       </button>
