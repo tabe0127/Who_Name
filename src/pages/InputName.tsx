@@ -25,18 +25,18 @@ export default function InputName({
 
   const handleNameChange = (id: number, newValue: string) => {
     setEntries((prevNames) =>
-      prevNames.map((name) =>
+      prevNames?.map((name) =>
         name.id === id ? { ...name, name: newValue } : name
       )
     );
   };
 
   const handleRemoveName = (id: number) => {
-    setEntries((prevNames) => prevNames.filter((name) => name.id !== id));
+    setEntries((prevNames) => prevNames?.filter((name) => name.id !== id));
   };
 
   // 名前が一つでも入力されているか確認
-  const isSubmitDisabled = entries.filter(({ name }) => name.trim() !== '').length < 2 || entries.some(({ name }) => name.trim() === '');
+  const isSubmitDisabled = entries?.filter(({ name }) => name.trim() !== '').length < 2 || entries?.some(({ name }) => name.trim() === '');
   return (
     <div style={{ margin: '20px', padding: '10px' }}>
 
