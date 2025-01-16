@@ -1,7 +1,4 @@
-import Image from "next/image";
-import soraki from '../assets/samples/IMG_8278.jpg'
-import tabe from '../assets/samples/IMG_8279.jpg'
-import ise from '../assets/samples/IMG_8281.jpg'
+
 
 export default function Home({ setSceneController }: { setSceneController : React.Dispatch<React.SetStateAction<string>> }){
 
