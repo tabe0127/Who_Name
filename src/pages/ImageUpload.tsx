@@ -20,7 +20,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
   const [indexId, setIndexId] = useState<number>(0);
 
   // 一時的な画像を管理
-  const [tempImg, setTempImg] = useState<string | null>(null);
+  const [tempImg, setTempImg] = useState<string>('');
 
   // 写真撮影時に提示するお題
   const [thema, setThema] = useState<string | null>(themaList ? themaList[themaList.length - 1] : "");
@@ -45,7 +45,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
     setEntries((prevEntries) => (
       prevEntries.map((prevEntry) => (prevEntry.id === entries[indexId].id ? {...prevEntry, imgURL: [...prevEntry.imgURL, tempImg]} : prevEntry))
     ));
-    setTempImg(null); // 一時的な画像をリセット
+    setTempImg(''); // 一時的な画像をリセット
   };
 
   const filePickerRef = useRef<HTMLInputElement>(null);
@@ -94,7 +94,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
 
     <button type="button" onClick={ThemaChange} className="my-4 p-4 text-white font-bold bg-green-400 rounded-xl shadow-lg mx-2">お題を変更する</button>
 
-    <WebCamera></WebCamera>
+    <WebCamera tempImg={tempImg} setTempImg={setTempImg}></WebCamera>
 
     {/* ファイルアップロード */}
     <input
