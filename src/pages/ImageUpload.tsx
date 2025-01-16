@@ -3,6 +3,7 @@ import Image from "next/image";
 import soraki from '../assets/samples/IMG_8278.jpg'
 import tabe from '../assets/samples/IMG_8279.jpg'
 import ise from '../assets/samples/IMG_8281.jpg'
+import WebCamera from "./Camera";
 
 type entries = {
   id: number;
@@ -92,6 +93,8 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
     <p className="mt-4">「{thema}」にちなんだ写真を撮ってください．</p>
 
     <button type="button" onClick={ThemaChange} className="my-4 p-4 text-white font-bold bg-green-400 rounded-xl shadow-lg mx-2">お題を変更する</button>
+
+    <WebCamera></WebCamera>
 
     {/* ファイルアップロード */}
     <input

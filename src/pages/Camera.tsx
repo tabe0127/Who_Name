@@ -1,12 +1,14 @@
 import React, { useRef, useState, useCallback } from 'react';
 import Webcam from 'react-webcam';
+import Image from "next/image"
+
 
 const WebCamera = () => {
-  const webcamRef = useRef(null);
-  const [imgSrc, setImgSrc] = useState(null);
+  const webcamRef = useRef<Webcam>(null);
+  const [imgSrc, setImgSrc] = useState<string>('');
 
   const capture = useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
+    const imageSrc: string= webcamRef.current?.getScreenshot() || '';
     setImgSrc(imageSrc);
   }, [webcamRef]);
 
@@ -18,7 +20,7 @@ const WebCamera = () => {
         screenshotFormat="image/jpeg"
       />
       <button onClick={capture}>撮影</button>
-      {imgSrc && <img src={imgSrc} alt="captured" />}
+      {imgSrc && <Image src={imgSrc} alt="captured" width={150} height={150} />}
     </>
   );
 };
