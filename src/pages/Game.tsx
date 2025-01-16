@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Hint from "./Hint"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CountdownTimer from "./Countdown";
 
 type entries = {
@@ -13,9 +13,17 @@ export default function Game({ setSceneController, entries }: { setSceneControll
   // 遊び方説明のモーダルを管理
   const [isOpenHint, setIsOpenHint] = useState<boolean>(false);
 
-  const audio = new Audio('/sounds/countdown.mp3');
+  const [audio, setAudio] = useState<HTMLAudioElement>();
+
+  useEffect(() => {
+    if (typeof Audio !== 'undefined') {
+      setAudio(new Audio('/sounds/countdown.mp3'));
+    }
+  }, []);
+
+  // const audio = new Audio('/sounds/countdown.mp3');
   const playSound = () => {
-    audio.play().catch((error) =>{
+    audio?.play().catch((error) =>{
       console.error('効果音の再生に失敗しました：',error);
     });
   }; 
@@ -41,7 +49,7 @@ export default function Game({ setSceneController, entries }: { setSceneControll
     setIsRunning(false); // カウントダウン停止
     console.log("3秒後に実行");
   }
-  audio.addEventListener('ended', () => {
+  audio?.addEventListener('ended', () => {
     // ここに音声再生後に実行したいコードを書きます
     console.log('音声再生が終了しました');
     // 他の処理を追加
