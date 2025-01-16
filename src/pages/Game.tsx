@@ -13,7 +13,7 @@ export default function Game({ setSceneController, entries }: { setSceneControll
   // 遊び方説明のモーダルを管理
   const [isOpenHint, setIsOpenHint] = useState<boolean>(false);
 
-  const audio = new Audio('/sounds/card-flip.mp3');
+  const audio = new Audio('/sounds/countdown.mp3');
   const playSound = () => {
     audio.play().catch((error) =>{
       console.error('効果音の再生に失敗しました：',error);
@@ -33,10 +33,11 @@ export default function Game({ setSceneController, entries }: { setSceneControll
   const [isRunning, setIsRunning] = useState(false);
   const startCountdown = async() => {
     console.log("開始");
+    playSound(); // サウンド再生を呼び出す
     setTimeLeft(3); // 3秒のカウントダウン
     setIsRunning(true);
     await new Promise(resolve => setTimeout(resolve, 3000));
-    playSound(); // サウンド再生を呼び出す
+    
     setIsRunning(false); // カウントダウン停止
     console.log("3秒後に実行");
   }
