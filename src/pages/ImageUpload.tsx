@@ -77,21 +77,58 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
 
   return(
     <>
-    <ol style={{ listStyleType: "decimal" , textAlign: "left", marginLeft: "20px" }} className="mt-4">
-      <ul><button type="button"className="p-2 text-white font-bold bg-blue-400 rounded-xl shadow-lg">写真を追加する</button>ボタンを押して<br /><span className="font-bold">いろんなポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries?.[indexId].name}</span>さんの写真を<span className="text-amber-300 text-2xl font-bold">{indexId === 0 ? entries?.[entries.length - 1].name : entries?.[indexId - 1].name}</span>さんが撮影・アップロードしてね！</ul>
-      <ul>※プレイ人数が4人以下なら1人3枚、5人以上なら1人2枚推奨</ul>
-      <ul>全員分の写真が集まったらゲームスタート！</ul>
-    </ol>
-    <p className="mt-4">ポーズの例</p>
-    <div className="flex">
-      <Image src={soraki} alt={"soraki"} width={110}  />
-      <Image src={tabe} alt={"tabe"} width={110} />
-      <Image src={ise} alt={"ise"} width={110} />
-    </div>
     <p className="mt-4">お題：「{thema}」</p>
     <p className="mt-4">「{thema}」にちなんだ写真を撮ってください．</p>
 
     <button type="button" onClick={ThemaChange} className="my-4 p-4 text-white font-bold bg-green-400 rounded-xl shadow-lg mx-2">お題を変更する</button>
+
+    <div
+  style={{
+    borderTop: "4px dotted gray", // 点線のスタイル
+    marginTop: "16px",            // 上の要素との間隔
+    width: "100%",                // 横幅を画面全体に
+  }}
+></div>
+
+    <ol
+  style={{
+    listStyleType: "decimal",
+    textAlign: "left",
+    marginLeft: "20px",
+    border: "4px solid #FE347E", // ボックスの枠線を追加
+    padding: "10px",          // ボックス内の余白を追加
+    borderRadius: "8px",      // ボックスの角を丸める（オプション）
+    //backgroundColor: "#f9f9f9", // 背景色を追加（オプション）
+  }}
+  className="mt-4"
+>
+
+
+      <ul><button type="button"className="p-2 text-white font-bold bg-blue-400 rounded-xl shadow-lg">写真を追加する</button>ボタンを押して<br /><span className="font-bold">お題にちなんだポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries?.[indexId].name}</span>さんの写真を<span className="text-amber-300 text-2xl font-bold">{indexId === 0 ? entries?.[entries.length - 1].name : entries?.[indexId - 1].name}</span>さんが撮影・アップロードしてね！</ul>
+      <ul>※プレイ人数が4人以下なら1人3枚、5人以上なら1人2枚推奨</ul>
+      <ul>全員分の写真が集まったらゲームスタート！</ul>
+
+    
+    <p className="mt-4">ポーズの例</p>
+    <div
+  className="flex flex-wrap justify-center md:flex-col md:items-start"
+  style={{ gap: "10px" }}
+>
+  <Image src={soraki} alt={"soraki"} width={110} />
+  <Image src={tabe} alt={"tabe"} width={110} />
+  <Image src={ise} alt={"ise"} width={110} />
+</div>
+    </ol>
+
+<div
+  style={{
+    borderTop: "4px dotted gray", // 点線のスタイル
+    marginTop: "16px",            // 上の要素との間隔
+    width: "100%",                // 横幅を画面全体に
+  }}
+></div>
+
+
 
     {/* ファイルアップロード */}
     <input
@@ -102,7 +139,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
       className="mb-2"
       hidden
       />
-    <button type="button" onClick={showFolder} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg mx-2">写真を追加する</button>
+    <button type="button" onClick={showFolder} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg mx-2">新規写真の追加</button>
 
     {/* 追加された写真一覧 */}
     <div>
@@ -120,6 +157,8 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
       )}
     </div>
 
+    {/* この写真を追加の横に写真を追加する画面を横並び */}
+
     {/* 登録ボタン */}
     {tempImg && (
     <button
@@ -129,38 +168,63 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
       この画像を追加
     </button>
     )}
+    
 
     {/* 画像プレビュー */}
-    {entries?.[indexId].imgURL.length > 0 && <p className="font-semibold">追加された写真</p>}
-    {entries?.[indexId].imgURL.length > 0 && (
-      <div style={{display: 'flex', flexDirection: 'row'}}>
-        {entries?.[indexId].imgURL.map((img, index) => 
+{entries?.[indexId].imgURL.length > 0 && (
+  <div
+    style={{
+      border: "2px solid #ccc",   // ボックスの枠線
+      borderRadius: "8px",        // 角丸の設定
+      padding: "16px",            // 内側の余白
+      marginTop: "16px",          // 上部の余白
+    }}
+  >
+    <p className="font-semibold">
+      <span className="text-amber-300 text-2xl">
+        {entries?.[indexId].name}
+      </span>
+      さんの登録済写真
+    </p>
+    <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+      {entries?.[indexId].imgURL.map((img, index) => (
         <div className="mb-2" key={index}>
-          {
-            <Image
-              src={img}
-              alt="Preview"
-              width={150}
-              height={150}
-              className="rounded-lg"
-            />
-          }
+          <Image
+            src={img}
+            alt="Preview"
+            width={150}
+            height={150}
+            className="rounded-lg"
+          />
         </div>
-        )}
-    </div>)}
+      ))}
+    </div>
+  </div>
+)}
+
+
+<div
+  style={{
+    borderTop: "4px dotted gray", // 点線のスタイル
+    marginTop: "16px",            // 上の要素との間隔
+    width: "100%",                // 横幅を画面全体に
+  }}
+></div>
+
     {indexId < entries?.length - 1 &&
     <button
       onClick={nextPlayer}
       className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
     >
-      次へ
+      次のプレイヤーの写真を登録
     </button>}
+    
     <button
       onClick={() => setSceneController('Name')}
       className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
     >
       {entries?.[indexId].imgURL.length == 0 && "戻る"}
-      {entries?.[indexId].imgURL.length > 0 && "プレイヤーを追加する"}
+      {entries?.[indexId].imgURL.length > 0 && "プレイヤー追加"}
     </button>
     { indexId === entries?.length - 1 && entries?.[indexId].imgURL.length >= 2 &&
     <button

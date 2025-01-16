@@ -1,4 +1,5 @@
 import React from 'react';
+let ID=1;
 
 type entries = {
   id: number;
@@ -18,7 +19,7 @@ export default function InputName({
   const handleAddName = () => {
     setEntries((prevNames) => [
       ...prevNames,
-      { id: prevNames.length + 1, name: '', imgURL: [] },
+      { id: ID++, name: '', imgURL: [] },
     ]);
   };
 
@@ -35,10 +36,17 @@ export default function InputName({
   };
 
   // 名前が一つでも入力されているか確認
-  const isSubmitDisabled = entries?.every(({ name }) => name.trim() === '');
-
+  const isSubmitDisabled = entries.filter(({ name }) => name.trim() !== '').length < 2 || entries.some(({ name }) => name.trim() === '');
   return (
     <div style={{ margin: '20px', padding: '10px' }}>
+
+       <div style={{
+        border: "2px dashed pink",
+        padding: "10px",
+        marginBottom: "20px"
+      }}>
+
+
       <h1 style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center' }}>
         プレイヤーを登録
       </h1>
@@ -51,6 +59,11 @@ export default function InputName({
       >
         覚えてほしい名前(本名など)で入力してね
       </p>
+
+      </div>
+
+
+
       {entries?.map(({ id, name }) => (
         <div
           key={id}
