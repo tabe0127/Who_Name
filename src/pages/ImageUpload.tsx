@@ -94,7 +94,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
 
     <button type="button" onClick={ThemaChange} className="my-4 p-4 text-white font-bold bg-green-400 rounded-xl shadow-lg mx-2">お題を変更する</button>
 
-    <WebCamera setTempImg={setTempImg}></WebCamera>
+    {tempImg?<></>:(<WebCamera setTempImg={setTempImg}></WebCamera>) }
 
     {/* ファイルアップロード */}
     <input
@@ -105,7 +105,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
       className="mb-2"
       hidden
       />
-    <button type="button" onClick={showFolder} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg mx-2">写真をアップロードする</button>
+    {tempImg?<></>:(<button type="button" onClick={showFolder} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg mx-2">写真をアップロードする</button>) }
 
     {/* 追加された写真一覧 */}
     <div>
