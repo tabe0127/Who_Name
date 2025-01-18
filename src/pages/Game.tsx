@@ -86,7 +86,7 @@ export default function Game({ setSceneController, entries }: { setSceneControll
       <br></br>
 
       <div>
-        再度出てきた場合：この人の<b>本名</b>と<b>あだ名</b>を素早く叫ぼう！
+        再度出てきた場合：名付けた<b>あだ名</b>を素早く叫ぼう！
       </div>
 
       <br></br>
