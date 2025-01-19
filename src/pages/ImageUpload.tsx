@@ -48,6 +48,15 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
     setTempImg(null); // 一時的な画像をリセット
   };
 
+  // 登録された画像の削除処理
+  const handleDelete = (index: number) => {
+    const tmp = entries[indexId].imgURL.splice(index,1);
+    setEntries((prev) =>
+      prev.map((e) =>
+        e.id === indexId ? { ...e, ImgURL: tmp } : e
+      ));
+  };
+
   const filePickerRef = useRef<HTMLInputElement>(null);
   const showFolder = () => {
     if (filePickerRef.current) {
@@ -138,15 +147,24 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
     {entries?.[indexId].imgURL.length > 0 && (
       <div style={{display: 'flex', flexDirection: 'row'}}>
         {entries?.[indexId].imgURL.map((img, index) => 
-        <div className="mb-2" key={index}>
+        <div className="mb-2 relative " key={index}>
           {
-            <Image
-              src={img}
-              alt="Preview"
-              width={150}
-              height={150}
-              className="rounded-lg"
-            />
+            <>
+              <Image
+                src={img}
+                alt="Preview"
+                width={150}
+                height={150}
+                className="rounded-lg"
+              />
+              <button
+                onClick={() => {handleDelete(index)}}
+                className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
+                style={{ transform: 'translate(50%, -50%)' }}
+              >
+                ×
+              </button>
+            </>
           }
         </div>
         )}
