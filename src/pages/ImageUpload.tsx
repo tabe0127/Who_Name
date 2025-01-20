@@ -221,10 +221,10 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
     
     <button
       onClick={() => setSceneController('Name')}
-      className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
+      className="p-4 text-white font-bold bg-gray-400 rounded-xl shadow-lg m-2"
     >
       {entries?.[indexId].imgURL.length == 0 && "戻る"}
-      {entries?.[indexId].imgURL.length > 0 && "新規プレイヤー追加"}
+      {entries?.[indexId].imgURL.length > 0 && "プレイヤー登録に戻る"}
     </button>
     { indexId === entries?.length - 1 && entries?.[indexId].imgURL.length >= 2 &&
     <button
