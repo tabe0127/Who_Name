@@ -79,6 +79,18 @@ export default function Game({ setSceneController, entries }: { setSceneControll
       </div>
       <CountdownTimer timeLeft={timeLeft} setTimeLeft={setTimeLeft} isRunning={isRunning} ></CountdownTimer>
 
+      <div>
+        初めて出た人の場合：この人の<b>あだ名</b>をつけよう！
+      </div>
+
+      <br></br>
+
+      <div>
+        再度出てきた場合：名付けた<b>あだ名</b>を素早く叫ぼう！
+      </div>
+
+      <br></br>
+
       {/* --- Nextボタン --- */}
       <div className="flex flex-col">
         <button
