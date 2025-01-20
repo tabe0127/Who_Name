@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import soraki from '../assets/samples/IMG_8278.jpg'
 import tabe from '../assets/samples/IMG_8279.jpg'
@@ -19,34 +19,11 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
   // entriesの何番目の要素かを管理
   const [indexId, setIndexId] = useState<number>(0);
 
-  // 一時的な画像を管理
-  const [tempImg, setTempImg] = useState<string | null>(null);
-
   // 写真撮影時に提示するお題
   const [thema, setThema] = useState<string | null>(themaList ? themaList[themaList.length - 1] : "");
 
   // themaListの何番目の要素かを管理
   const [indexId_thema, setIndexId_thema] = useState<number>(0);
-
-  // 一時的な画像アップロード処理
-  const handleTempImgUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    const tempFile = e.target.files[0];
-    const tempImgUrl = window.URL.createObjectURL(tempFile);
-    setTempImg(tempImgUrl);
-  };
-
-  // 画像登録処理
-  const handleRegisterEntry = () => {
-    if (tempImg == null) {
-      alert('写真をアップロードしてください');
-      return
-    }
-    setEntries((prevEntries) => (
-      prevEntries.map((prevEntry) => (prevEntry.id === entries[indexId].id ? {...prevEntry, imgURL: [...prevEntry.imgURL, tempImg]} : prevEntry))
-    ));
-    setTempImg(null); // 一時的な画像をリセット
-  };
 
   // 登録された画像の削除処理
   const handleDelete = (index: number) => {
@@ -55,13 +32,6 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
       prev.map((e) =>
         e.id === indexId ? { ...e, ImgURL: tmp } : e
       ));
-  };
-
-  const filePickerRef = useRef<HTMLInputElement>(null);
-  const showFolder = () => {
-    if (filePickerRef.current) {
-      filePickerRef.current.click();
-    }
   };
 
   const nextPlayer = () => {
@@ -103,51 +73,14 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
 
     <button type="button" onClick={ThemaChange} className="my-4 p-4 text-white font-bold bg-green-400 rounded-xl shadow-lg mx-2">お題を変更する</button>
 
-    {tempImg?<></>:(<WebCamera setTempImg={setTempImg}></WebCamera>) }
-
-    {/* ファイルアップロード */}
-    <input
-      type="file"
-      accept="image/*"
-      ref={filePickerRef}
-      onChange={handleTempImgUpload}
-      className="mb-2"
-      hidden
-      />
-    {tempImg?<></>:(<button type="button" onClick={showFolder} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg mx-2">写真をアップロードする</button>) }
-
-    {/* 追加された写真一覧 */}
-    <div>
-      {tempImg && (
-        <div className="mb-2">
-          <p>プレビュー</p>
-          <Image
-            src={tempImg}
-            alt="Preview"
-            width={150}
-            height={150}
-            className="rounded-lg"
-          />
-        </div>
-      )}
-    </div>
-
-    {/* 登録ボタン */}
-    {tempImg && (
-    <button
-      onClick={handleRegisterEntry}
-      className="p-2 bg-green-500 text-white rounded-md shadow-lg"
-    >
-      この画像を追加
-    </button>
-    )}
+    <WebCamera entries={entries} setEntries={setEntries} indexId={indexId}></WebCamera>
 
     {/* 画像プレビュー */}
     {entries?.[indexId].imgURL.length > 0 && <p className="font-semibold">追加された写真</p>}
     {entries?.[indexId].imgURL.length > 0 && (
       <div style={{display: 'flex', flexDirection: 'row'}}>
         {entries?.[indexId].imgURL.map((img, index) => 
-        <div className="mb-2 relative " key={index}>
+        <div className="mb-2 relative mr-2" key={index}>
           {
             <>
               <Image
@@ -159,7 +92,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
               />
               <button
                 onClick={() => {handleDelete(index)}}
-                className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
+                className="absolute top-4 right-4 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
                 style={{ transform: 'translate(50%, -50%)' }}
               >
                 ×

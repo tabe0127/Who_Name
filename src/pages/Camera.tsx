@@ -1,7 +1,13 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
 import Webcam from 'react-webcam';
 
-const WebCamera = ({ setTempImg }: { setTempImg: React.Dispatch<React.SetStateAction<string | null>> }) => {
+type entries = {
+  id: number;
+  name: string;
+  imgURL: string[];
+}
+
+const WebCamera = ({ entries, setEntries, indexId }: { entries: entries[], setEntries : React.Dispatch<React.SetStateAction<entries[]>>, indexId: number }) => {
   const webcamRef = useRef<Webcam>(null);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
 
@@ -21,8 +27,10 @@ const WebCamera = ({ setTempImg }: { setTempImg: React.Dispatch<React.SetStateAc
 
   const capture = useCallback(() => {
     const imageSrc: string = webcamRef.current?.getScreenshot() || '';
-    setTempImg(imageSrc);
-  }, [webcamRef, setTempImg]);
+    setEntries((prevEntries) => (
+      prevEntries.map((prevEntry) => (prevEntry.id === entries[indexId].id ? {...prevEntry, imgURL: [...prevEntry.imgURL, imageSrc]} : prevEntry))
+    ));
+  }, [webcamRef, setEntries]);
 
   const requestPermission = async () => {
     try {
