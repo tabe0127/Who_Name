@@ -1,8 +1,9 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import soraki from '../assets/samples/IMG_8278.jpg'
 import tabe from '../assets/samples/IMG_8279.jpg'
 import ise from '../assets/samples/IMG_8281.jpg'
+import WebCamera from "./Camera";
 
 type entries = {
   id: number;
@@ -18,40 +19,19 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
   // entriesの何番目の要素かを管理
   const [indexId, setIndexId] = useState<number>(0);
 
-  // 一時的な画像を管理
-  const [tempImg, setTempImg] = useState<string | null>(null);
-
   // 写真撮影時に提示するお題
   const [thema, setThema] = useState<string | null>(themaList ? themaList[themaList.length - 1] : "");
 
   // themaListの何番目の要素かを管理
   const [indexId_thema, setIndexId_thema] = useState<number>(0);
 
-  // 一時的な画像アップロード処理
-  const handleTempImgUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    const tempFile = e.target.files[0];
-    const tempImgUrl = window.URL.createObjectURL(tempFile);
-    setTempImg(tempImgUrl);
-  };
-
-  // 画像登録処理
-  const handleRegisterEntry = () => {
-    if (tempImg == null) {
-      alert('写真をアップロードしてください');
-      return
-    }
-    setEntries((prevEntries) => (
-      prevEntries.map((prevEntry) => (prevEntry.id === entries[indexId].id ? {...prevEntry, imgURL: [...prevEntry.imgURL, tempImg]} : prevEntry))
-    ));
-    setTempImg(null); // 一時的な画像をリセット
-  };
-
-  const filePickerRef = useRef<HTMLInputElement>(null);
-  const showFolder = () => {
-    if (filePickerRef.current) {
-      filePickerRef.current.click();
-    }
+  // 登録された画像の削除処理
+  const handleDelete = (index: number) => {
+    const tmp = entries[indexId].imgURL.splice(index,1);
+    setEntries((prev) =>
+      prev.map((e) =>
+        e.id === indexId ? { ...e, ImgURL: tmp } : e
+      ));
   };
 
   const nextPlayer = () => {
@@ -83,133 +63,97 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
     <button type="button" onClick={ThemaChange} className="my-4 p-4 text-white font-bold bg-green-400 rounded-xl shadow-lg mx-2">お題を変更する</button>
 
     <div
-  style={{
-    borderTop: "4px dotted gray", // 点線のスタイル
-    marginTop: "16px",            // 上の要素との間隔
-    width: "100%",                // 横幅を画面全体に
-  }}
-></div>
+    style={{
+      borderTop: "4px dotted gray", // 点線のスタイル
+      marginTop: "16px",            // 上の要素との間隔
+      width: "100%",                // 横幅を画面全体に
+    }}
+    ></div>
 
     <ol
-  style={{
-    listStyleType: "decimal",
-    textAlign: "left",
-    marginLeft: "20px",
-    border: "4px solid #FE347E", // ボックスの枠線を追加
-    padding: "10px",          // ボックス内の余白を追加
-    borderRadius: "8px",      // ボックスの角を丸める（オプション）
-    //backgroundColor: "#f9f9f9", // 背景色を追加（オプション）
-  }}
-  className="mt-4"
->
-
-
-      <ul><button type="button"className="p-2 text-white font-bold bg-blue-400 rounded-xl shadow-lg">写真を追加する</button>ボタンを押して<br /><span className="font-bold">お題にちなんだポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries?.[indexId].name}</span>さんの写真を<span className="text-amber-300 text-2xl font-bold">{indexId === 0 ? entries?.[entries.length - 1].name : entries?.[indexId - 1].name}</span>さんが撮影・アップロードしてね！</ul>
+    style={{
+      listStyleType: "decimal",
+      textAlign: "left",
+      marginLeft: "20px",
+      border: "4px solid #FE347E", // ボックスの枠線を追加
+      padding: "10px",          // ボックス内の余白を追加
+      borderRadius: "8px",      // ボックスの角を丸める（オプション）
+      //backgroundColor: "#f9f9f9", // 背景色を追加（オプション）
+    }}
+    className="mt-4"
+    >
+      <ul><span className="font-bold">お題にちなんだポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries?.[indexId].name}</span>さんの写真を<span className="text-amber-300 text-2xl font-bold">{indexId === 0 ? entries?.[entries.length - 1].name : entries?.[indexId - 1].name}</span>さんが撮影してね！</ul>
       <ul>※プレイ人数が4人以下なら1人3枚、5人以上なら1人2枚推奨</ul>
       <ul>全員分の写真が集まったらゲームスタート！</ul>
-
-    
-    <p className="mt-4">ポーズの例</p>
-    <div
-  className="flex flex-wrap justify-center md:flex-col md:items-start"
-  style={{ gap: "10px" }}
->
-  <Image src={soraki} alt={"soraki"} width={110} />
-  <Image src={tabe} alt={"tabe"} width={110} />
-  <Image src={ise} alt={"ise"} width={110} />
-</div>
+      <p className="mt-4">ポーズの例</p>
+      <div
+      className="flex flex-wrap justify-center md:flex-col md:items-start"
+      style={{ gap: "10px" }}
+      >
+        <Image src={soraki} alt={"soraki"} width={110} />
+        <Image src={tabe} alt={"tabe"} width={110} />
+        <Image src={ise} alt={"ise"} width={110} />
+      </div>
     </ol>
 
-<div
-  style={{
-    borderTop: "4px dotted gray", // 点線のスタイル
-    marginTop: "16px",            // 上の要素との間隔
-    width: "100%",                // 横幅を画面全体に
-  }}
-></div>
+    <div
+      style={{
+        borderTop: "4px dotted gray", // 点線のスタイル
+        marginTop: "16px",            // 上の要素との間隔
+        width: "100%",                // 横幅を画面全体に
+      }}
+    ></div>
 
 
 
-    {/* ファイルアップロード */}
-    <input
-      type="file"
-      accept="image/*"
-      ref={filePickerRef}
-      onChange={handleTempImgUpload}
-      className="mb-2"
-      hidden
-      />
-    <button type="button" onClick={showFolder} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg mx-2">新規写真の追加</button>
-
-    {/* 追加された写真一覧 */}
-    <div>
-      {tempImg && (
-        <div className="mb-2">
-          <p>プレビュー</p>
-          <Image
-            src={tempImg}
-            alt="Preview"
-            width={150}
-            height={150}
-            className="rounded-lg"
-          />
-        </div>
-      )}
-    </div>
-
-    {/* この写真を追加の横に写真を追加する画面を横並び */}
-
-    {/* 登録ボタン */}
-    {tempImg && (
-    <button
-      onClick={handleRegisterEntry}
-      className="p-2 bg-green-500 text-white rounded-md shadow-lg"
-    >
-      この画像を追加
-    </button>
-    )}
-    
+    <WebCamera entries={entries} setEntries={setEntries} indexId={indexId}></WebCamera>
 
     {/* 画像プレビュー */}
-{entries?.[indexId].imgURL.length > 0 && (
-  <div
-    style={{
-      border: "2px solid #ccc",   // ボックスの枠線
-      borderRadius: "8px",        // 角丸の設定
-      padding: "16px",            // 内側の余白
-      marginTop: "16px",          // 上部の余白
-    }}
-  >
-    <p className="font-semibold">
-      <span className="text-amber-300 text-2xl">
-        {entries?.[indexId].name}
-      </span>
-      さんの登録済写真
-    </p>
-    <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-      {entries?.[indexId].imgURL.map((img, index) => (
-        <div className="mb-2" key={index}>
-          <Image
-            src={img}
-            alt="Preview"
-            width={150}
-            height={150}
-            className="rounded-lg"
-          />
+    {entries?.[indexId].imgURL.length > 0 && (
+      <div
+        style={{
+          border: "2px solid #ccc",   // ボックスの枠線
+          borderRadius: "8px",        // 角丸の設定
+          padding: "16px",            // 内側の余白
+          marginTop: "16px",          // 上部の余白
+        }}
+      >
+        <p className="font-semibold">
+          <span className="text-amber-300 text-2xl">
+            {entries?.[indexId].name}
+          </span>
+          さんの登録済写真
+        </p>
+        <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+          {entries?.[indexId].imgURL.map((img, index) => (
+            <div className="mb-2 relative mr-2" key={index}>
+              <Image
+                src={img}
+                alt="Preview"
+                width={150}
+                height={150}
+                className="rounded-lg"
+              />
+              <button
+                onClick={() => {handleDelete(index)}}
+                className="absolute top-4 right-4 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
+                style={{ transform: 'translate(50%, -50%)' }}
+              >
+                ×
+              </button>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
-  </div>
-)}
+      </div>
+    )}
 
-
-<div
-  style={{
-    borderTop: "4px dotted gray", // 点線のスタイル
-    marginTop: "16px",            // 上の要素との間隔
-    width: "100%",                // 横幅を画面全体に
-  }}
-></div>
+    <div
+      style={{
+        borderTop: "4px dotted gray", // 点線のスタイル
+        marginTop: "16px",            // 上の要素との間隔
+        width: "100%",                // 横幅を画面全体に
+      }}
+    ></div>
 
     {indexId < entries?.length - 1 &&
     <button
