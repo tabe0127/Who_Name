@@ -34,13 +34,19 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
       ));
   };
 
+  const getRequiredPhotos = (entries: entries[]): number => {
+    return entries?.length <= 4 ? 3 : 2;
+  };  
+
   const nextPlayer = () => {
-    if(entries[indexId].imgURL.length < 2){
-      alert('写真を2枚以上登録してください');
-    } else {
-      setIndexId((prev) => (prev + 1));
-    }
-  }
+    // 必要な写真枚数を取得
+    const requiredPhotos = getRequiredPhotos(entries);
+  
+    // 条件付きで処理を実行
+    return entries[indexId].imgURL.length < requiredPhotos
+      ? alert(`写真を${requiredPhotos}枚以上登録してください`)
+      : setIndexId((prev) => prev + 1);
+  };  
 
   // お題変更
   const ThemaChange = () => {
@@ -83,7 +89,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
     className="mt-4"
     >
       <ul><span className="font-bold">お題にちなんだポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries?.[indexId].name}</span>さんの写真を<span className="text-amber-300 text-2xl font-bold">{indexId === 0 ? entries?.[entries.length - 1].name : entries?.[indexId - 1].name}</span>さんが撮影してね！</ul>
-      <ul>※プレイ人数が4人以下なら1人3枚、5人以上なら1人2枚推奨</ul>
+      <ul>{getRequiredPhotos(entries)}枚以上撮ってください</ul>
       <ul>全員分の写真が集まったらゲームスタート！</ul>
       <p className="mt-4">ポーズの例</p>
       <div
