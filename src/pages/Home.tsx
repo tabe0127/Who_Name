@@ -4,7 +4,9 @@ export default function Home({ setSceneController }: { setSceneController : Reac
 
   return(
     <>
-    <h2 className="text-2xl">は、<b>人間版なんじゃもんじゃゲームです。</b></h2><br />
+    <h2 className="text-2xl">は、<b>人間版なんじゃもんじゃ <br /> ゲームです。</b></h2><br />
+    <p className="text-2xl">カードになるのはあなた自身!!</p><br />
+    <p>※このアプリケーションでは <br /> カメラを使用します。</p>
     <div style={{
         border: "2px dashed pink",
         padding: "10px",
