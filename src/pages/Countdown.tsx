@@ -9,7 +9,7 @@ export default function CountdownTimer({ timeLeft, setTimeLeft, isRunning }: { t
         }, 1000);
         }
         return () => clearTimeout(timer);
-    }, [isRunning, timeLeft]);
+    }, [isRunning, timeLeft, setTimeLeft]);
 
     const formatTime = (time: number) => {
         return time;

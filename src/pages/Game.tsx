@@ -39,13 +39,11 @@ export default function Game({ setSceneController, entries }: { setSceneControll
   // CountdownTimer用
   const [timeLeft, setTimeLeft] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false); // ボタン無効化用の状態
   const startCountdown = async() => {
     console.log("開始");
     playSound(); // サウンド再生を呼び出す
     setTimeLeft(3); // 3秒のカウントダウン
     setIsRunning(true);
-    setIsDisabled(true); // ボタンを無効化
     await new Promise(resolve => setTimeout(resolve, 4000));
     
     setIsRunning(false); // カウントダウン停止
