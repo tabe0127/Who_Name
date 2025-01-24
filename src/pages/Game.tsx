@@ -1,5 +1,4 @@
 import Image from "next/image"
-import Hint from "./Hint"
 import { useState, useEffect } from "react";
 import CountdownTimer from "./Countdown";
 
@@ -10,8 +9,6 @@ type entries = {
 }
 
 export default function Game({ setSceneController, entries }: { setSceneController : React.Dispatch<React.SetStateAction<string>>, entries: entries[] }){
-  // 遊び方説明のモーダルを管理
-  const [isOpenHint, setIsOpenHint] = useState<boolean>(false);
 
   const [audio, setAudio] = useState<HTMLAudioElement>();
 
@@ -102,12 +99,8 @@ export default function Game({ setSceneController, entries }: { setSceneControll
       >
         Next
       </button>
-        {/* --- ヒントボタン --- */}
-        <button onClick={()=>setIsOpenHint(true)} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg">名付けのヒント</button>
       </div>
     </div>
-    {/* --- ヒント --- */}
-    <Hint isOpenHint={isOpenHint} setIsOpenHint={setIsOpenHint} />
     </>
   )
 }
