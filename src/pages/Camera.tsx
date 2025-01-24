@@ -14,7 +14,7 @@ const WebCamera = ({ entries, setEntries, indexId }: { entries: entries[], setEn
   // 外カメラ起動に必要な設定
   const videoConstraints = {
     width: 300,
-    height: 260,
+    height: 300,
     facingMode: { exact: "environment" }
   };
 
