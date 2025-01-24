@@ -44,7 +44,7 @@ export default function Game({ setSceneController, entries }: { setSceneControll
     playSound(); // サウンド再生を呼び出す
     setTimeLeft(3); // 3秒のカウントダウン
     setIsRunning(true);
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    await new Promise(resolve => setTimeout(resolve, 4000));
     
     setIsRunning(false); // カウントダウン停止
     console.log("3秒後に実行");
@@ -93,12 +93,15 @@ export default function Game({ setSceneController, entries }: { setSceneControll
 
       {/* --- Nextボタン --- */}
       <div className="flex flex-col">
-        <button
+      <button
         onClick={startCountdown}
-          className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
-        >
-          Next
-        </button>
+        className={`p-4 font-bold rounded-xl shadow-lg m-2 ${
+          isRunning ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-blue-400 text-white"
+        }`}
+        disabled={isRunning} // カウントダウン中は無効化
+      >
+        Next
+      </button>
         {/* --- ヒントボタン --- */}
         <button onClick={()=>setIsOpenHint(true)} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg">名付けのヒント</button>
       </div>
