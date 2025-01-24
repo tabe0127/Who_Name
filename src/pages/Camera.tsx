@@ -11,6 +11,13 @@ const WebCamera = ({ entries, setEntries, indexId }: { entries: entries[], setEn
   const webcamRef = useRef<Webcam>(null);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
 
+  // 外カメラ起動に必要な設定
+  const videoConstraints = {
+    width: 720,
+    height: 360,
+    facingMode: { exact: "environment" }
+  };
+
   useEffect(() => {
     const checkCameraPermission = async () => {
       try {
@@ -62,6 +69,7 @@ const WebCamera = ({ entries, setEntries, indexId }: { entries: entries[], setEn
         audio={false}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
+        videoConstraints={videoConstraints}
       />
       <button onClick={capture} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg">撮影</button>
     </>
