@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import soraki from '../assets/samples/IMG_8278.jpg'
 import tabe from '../assets/samples/IMG_8279.jpg'
@@ -43,10 +43,15 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
     const requiredPhotos = getRequiredPhotos(entries);
   
     // 条件付きで処理を実行
-    return entries[indexId].imgURL.length < requiredPhotos
-      ? alert(`写真を${requiredPhotos}枚以上登録してください`)
-      : setIndexId((prev) => prev + 1);
-  };  
+    if (entries[indexId].imgURL.length < requiredPhotos) {
+      alert(`写真を${requiredPhotos}枚以上登録してください`);
+    } else {
+      // 次のプレイヤーに進む前にランダムにお題を変更
+      random_thema();
+      // プレイヤーを進める
+      setIndexId((prev) => prev + 1);
+    }
+  };
 
   // お題変更
   const ThemaChange = () => {
@@ -60,6 +65,15 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
       setThema(themaList[indexId_thema]);
     }
   }
+
+  const random_thema = () => {
+    const randomIndex = Math.floor(Math.random() * themaList.length);
+    setThema(themaList[randomIndex]);
+  };  
+
+  useEffect(() => {
+    random_thema();
+  }, []);
 
   return(
     <>
