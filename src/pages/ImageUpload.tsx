@@ -12,7 +12,7 @@ type entries = {
 }
 
 // お題一覧
-const themaList = ["趣味", "サークル", "好きなスポーツ", "好きな生き物", "好きなキャラクター"];
+const themaList = ["趣味", "サークル・部活動", "好きなスポーツ", "好きな生き物", "好きなキャラクター", "好きなお笑い芸人", "マイブーム", "好きな偉人", "特技"];
 
 export const random_thema = (setThema: React.Dispatch<React.SetStateAction<string | null>>, setIndexId_thema: React.Dispatch<React.SetStateAction<number>>) => {
   const randomIndex = Math.floor(Math.random() * themaList.length);
