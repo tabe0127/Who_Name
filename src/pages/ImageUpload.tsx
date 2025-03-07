@@ -178,19 +178,24 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
     >
       次のプレイヤーの写真を登録
     </button>}
-    
+
+    <div className="flex justify-center gap-4 mt-4">
     <button
       onClick={() => setSceneController('Name')}
       className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
     >
       {entries?.[indexId].imgURL.length >= 0 && "プレイヤー登録に戻る"}
     </button>
-    { indexId === entries?.length - 1 && entries?.[indexId].imgURL.length >= 2 &&
-    <button
-    onClick={() => setSceneController('Game')}
-    className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
-    >ゲーム開始</button>
-    }
+
+    {indexId === entries?.length - 1 && entries?.[indexId].imgURL.length >= 2 && (
+      <button
+        onClick={() => setSceneController('Game')}
+        className="p-4 text-white font-bold bg-red-400 rounded-xl shadow-lg m-2"
+      >
+        ゲーム開始
+      </button>
+      )}
+      </div>
     </>
   )
 }
