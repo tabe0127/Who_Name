@@ -1,12 +1,14 @@
-
+import Image from "next/image";
+import WhoName from '../assets/samples/WhoName.png'
 
 export default function Home({ setSceneController }: { setSceneController : React.Dispatch<React.SetStateAction<string>> }){
 
   return(
     <>
-    <h2 className="text-2xl">は、<b>人間版なんじゃもんじゃ <br /> ゲームです。</b></h2><br />
+    <Image src={WhoName} alt={"WhoName"} width={200} />
+    <h2 className="text-2xl"><b><br />人間版なんじゃもんじゃゲーム</b></h2><br />
     <p className="text-2xl">カードになるのはあなた自身!!</p><br />
-    <p>※このアプリケーションでは <br /> カメラを使用します。</p>
+    <p>※このアプリケーションではカメラを使用します。</p><br />
     <div style={{
         border: "2px dashed pink",
         padding: "10px",

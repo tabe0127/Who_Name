@@ -21,8 +21,7 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <h1 className="text-5xl mt-6">Who?Name!</h1>
-
+      
       {sceneController=='Home' ? <Start setSceneController={setSceneController}></Start>: <></>}
       {sceneController=='Name' ? <InputName setSceneController={setSceneController} entries={entries} setEntries={setEntries}></InputName>:<></>}
       {sceneController=='ImageUpload' ? <ImageUpload setSceneController={setSceneController}  entries={entries} setEntries={setEntries} ></ImageUpload>:<></>}
