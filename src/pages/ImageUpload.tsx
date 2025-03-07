@@ -46,7 +46,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
     return entries[indexId].imgURL.length < requiredPhotos
       ? alert(`写真を${requiredPhotos}枚以上登録してください`)
       : setIndexId((prev) => prev + 1), window.scrollTo(0, 0); // ページの一番上にスクロール
-  };  
+  };
 
   // お題変更
   const ThemaChange = () => {
