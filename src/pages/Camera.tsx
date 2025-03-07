@@ -61,7 +61,7 @@ const WebCamera = ({ entries, setEntries, indexId, setThema, setIndexId_thema, g
   };
 
 // 現在の撮影枚数
-const currentPhotos = entries[indexId].imgURL.length;
+const currentPhotos = entries?.[indexId].imgURL.length;
 // 必要な枚数
 const requiredPhotos = getRequiredPhotos(entries);
 //  残りの撮影枚数（負の値にならないようにする）
