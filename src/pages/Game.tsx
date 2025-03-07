@@ -26,10 +26,8 @@ export default function Game({ setSceneController, entries }: { setSceneControll
   }; 
 
   function getRandomEntry(obj: entries[] ): {name: string, img: string} {
-    // const randomIndex = Math.floor(Math.random() * obj?.length);
-    const randomIndex = 0;
-    // const randomImg = obj?.[randomIndex].imgURL[Math.floor(Math.random() * obj?.[randomIndex].imgURL.length)]
-    const randomImg = obj?.[randomIndex].imgURL[0]
+    const randomIndex = Math.floor(Math.random() * obj?.length);
+    const randomImg = obj?.[randomIndex].imgURL[Math.floor(Math.random() * obj?.[randomIndex].imgURL.length)]
     return {name: obj?.[randomIndex].name, img: randomImg};
   }
   
