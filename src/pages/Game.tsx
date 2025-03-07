@@ -32,6 +32,7 @@ export default function Game({ setSceneController, entries }: { setSceneControll
   }
   
   const [randomEntry, setRandomEntry] = useState<{name: string, img: string}>(getRandomEntry(entries))
+  const [alreadyDisplayedImg, setAlreadyDisplayedImg] = useState<string[]>([]);
 
   // CountdownTimer用
   const [timeLeft, setTimeLeft] = useState(0);
@@ -41,6 +42,7 @@ export default function Game({ setSceneController, entries }: { setSceneControll
     playSound(); // サウンド再生を呼び出す
     setTimeLeft(3); // 3秒のカウントダウン
     setIsRunning(true);
+    setAlreadyDisplayedImg((prevImgs) => (prevImgs.includes(randomEntry.img) === false ? [...prevImgs, randomEntry.img] : prevImgs));  // 登録されていないなら，表示済み画像として登録
     await new Promise(resolve => setTimeout(resolve, 4000));
     
     setIsRunning(false); // カウントダウン停止
@@ -76,17 +78,29 @@ export default function Game({ setSceneController, entries }: { setSceneControll
       </div>
       <CountdownTimer timeLeft={timeLeft} setTimeLeft={setTimeLeft} isRunning={isRunning} ></CountdownTimer>
 
-      <div>
-        初めて出た人の場合：この人の<b>あだ名</b>をつけよう！
-      </div>
+      {/* カウントダウン中には表示しない */}
+      {/* 初めて表示された画像の場合 */}
+      {!isRunning && !alreadyDisplayedImg.includes(randomEntry.img) && (
+        <div>
+          <div>
+            この人の<b>あだ名</b>をつけよう！
+          </div>
+      
+          <br></br>
+        </div>
+      )}
 
-      <br></br>
+      {/* カウントダウン中には表示しない */}
+      {/* 再度表示された画像の場合 */}
+      {!isRunning && alreadyDisplayedImg.includes(randomEntry.img) && (
+        <div>
+          <div>
+            名付けた<b>あだ名</b>を素早く叫ぼう！
+          </div>
 
-      <div>
-        再度出てきた場合：名付けた<b>あだ名</b>を素早く叫ぼう！
-      </div>
-
-      <br></br>
+          <br></br>
+        </div>
+      )}
 
       {/* --- Nextボタン --- */}
       <div className="flex flex-col">
