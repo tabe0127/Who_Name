@@ -14,7 +14,13 @@ type entries = {
 // お題一覧
 const themaList = ["趣味", "サークル", "好きなスポーツ", "好きな生き物", "好きなキャラクター"];
 
-export default function ImageUpload({ setSceneController, entries, setEntries }: { setSceneController : React.Dispatch<React.SetStateAction<string>>, entries: entries[], setEntries : React.Dispatch<React.SetStateAction<entries[]>> }){
+export const random_thema = (setThema: React.Dispatch<React.SetStateAction<string | null>>, setIndexId_thema: React.Dispatch<React.SetStateAction<number>>) => {
+  const randomIndex = Math.floor(Math.random() * themaList.length);
+  setThema(themaList[randomIndex]);
+  setIndexId_thema(randomIndex);  // インデックスを更新
+};
+
+export default function ImageUpload({ setSceneController, entries, setEntries}: { setSceneController : React.Dispatch<React.SetStateAction<string>>, entries: entries[], setEntries : React.Dispatch<React.SetStateAction<entries[]>> }){
 
   // entriesの何番目の要素かを管理
   const [indexId, setIndexId] = useState<number>(0);
@@ -46,8 +52,6 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
     if (entries[indexId].imgURL.length < requiredPhotos) {
       alert(`写真を${requiredPhotos}枚以上登録してください`);
     } else {
-      // 次のプレイヤーに進む前にランダムにお題を変更
-      random_thema();
       // プレイヤーを進める
       setIndexId((prev) => prev + 1);
     }
@@ -66,13 +70,8 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
     }
   }
 
-  const random_thema = () => {
-    const randomIndex = Math.floor(Math.random() * themaList.length);
-    setThema(themaList[randomIndex]);
-  };  
-
   useEffect(() => {
-    random_thema();
+    random_thema(setThema,setIndexId_thema);
   }, []);
 
   return(
@@ -126,7 +125,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries }:
 
 
 
-    <WebCamera entries={entries} setEntries={setEntries} indexId={indexId}></WebCamera>
+    <WebCamera entries={entries} setEntries={setEntries} indexId={indexId} setThema={setThema} setIndexId_thema={setIndexId_thema}></WebCamera>
 
     {/* 画像プレビュー */}
     {entries?.[indexId].imgURL.length > 0 && (

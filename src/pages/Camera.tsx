@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Webcam from 'react-webcam';
+import {random_thema} from './ImageUpload';
 
 type entries = {
   id: number;
@@ -7,7 +8,7 @@ type entries = {
   imgURL: string[];
 }
 
-const WebCamera = ({ entries, setEntries, indexId }: { entries: entries[], setEntries : React.Dispatch<React.SetStateAction<entries[]>>, indexId: number }) => {
+const WebCamera = ({ entries, setEntries, indexId, setThema, setIndexId_thema }: { entries: entries[], setEntries: React.Dispatch<React.SetStateAction<entries[]>>, indexId: number, setThema: React.Dispatch<React.SetStateAction<string | null>>, setIndexId_thema: React.Dispatch<React.SetStateAction<number>> }) => {
   const webcamRef = useRef<Webcam>(null);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
 
@@ -37,6 +38,8 @@ const WebCamera = ({ entries, setEntries, indexId }: { entries: entries[], setEn
     setEntries((prevEntries) => (
       prevEntries.map((prevEntry) => (prevEntry.id === entries[indexId].id ? {...prevEntry, imgURL: [...prevEntry.imgURL, imageSrc]} : prevEntry))
     ));
+    // random_thema を呼び出してお題を変更
+    random_thema(setThema, setIndexId_thema);
   };
 
   const requestPermission = async () => {
