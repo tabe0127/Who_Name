@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import soraki from '../assets/samples/IMG_8278.jpg'
-import tabe from '../assets/samples/IMG_8279.jpg'
-import ise from '../assets/samples/IMG_8281.jpg'
+// import soraki from '../assets/samples/IMG_8278.jpg'
+// import tabe from '../assets/samples/IMG_8279.jpg'
+// import ise from '../assets/samples/IMG_8281.jpg'
 import WebCamera from "./Camera";
 
 type entries = {
@@ -73,18 +73,18 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
 
   return(
     <>
-    <p className="mt-4">お題：「{thema}」</p>
-    <p className="mt-4">「{thema}」にちなんだ写真を撮ってください．</p>
+    {/* <p className="mt-4">お題：「{thema}」</p>
+    <p className="mt-4">「{thema}」にちなんだ写真を撮ってください．</p> */}
 
-    <button type="button" onClick={ThemaChange} className="my-4 p-4 text-white font-bold bg-green-400 rounded-xl shadow-lg mx-2">お題を変更する</button>
+    {/* <button type="button" onClick={ThemaChange} className="my-4 p-4 text-white font-bold bg-green-400 rounded-xl shadow-lg mx-2">お題を変更する</button> */}
 
-    <div
+    {/* <div
     style={{
       borderTop: "4px dotted gray", // 点線のスタイル
       marginTop: "16px",            // 上の要素との間隔
       width: "100%",                // 横幅を画面全体に
     }}
-    ></div>
+    ></div> */}
 
     <ol
     style={{
@@ -101,14 +101,14 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
       <ul><span className="font-bold">お題にちなんだポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries?.[indexId].name}</span>さんの写真を<span className="text-amber-300 text-2xl font-bold">{indexId === 0 ? entries?.[entries.length - 1].name : entries?.[indexId - 1].name}</span>さんが撮影してね！</ul>
       <ul>{getRequiredPhotos(entries)}枚以上撮ってください</ul>
       <ul>全員分の写真が集まったらゲームスタート！</ul>
-      <p className="mt-4">ポーズの例</p>
+      {/* <p className="mt-4">ポーズの例</p> */}
       <div
       className="flex flex-wrap justify-center md:flex-col md:items-start"
       style={{ gap: "10px" }}
       >
-        <Image src={soraki} alt={"soraki"} width={110} />
+        {/* <Image src={soraki} alt={"soraki"} width={110} />
         <Image src={tabe} alt={"tabe"} width={110} />
-        <Image src={ise} alt={"ise"} width={110} />
+        <Image src={ise} alt={"ise"} width={110} /> */}
       </div>
     </ol>
 
@@ -120,7 +120,18 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
       }}
     ></div>
 
+    <p className="mt-4">お題：「{thema}」</p>
+    <p className="mt-4">「{thema}」にちなんだ写真を撮ってください．</p>
 
+    <button type="button" onClick={ThemaChange} className="my-4 p-4 text-white font-bold bg-green-400 rounded-xl shadow-lg mx-2">お題を変更する</button>
+
+    <div
+    style={{
+      borderTop: "4px dotted gray", // 点線のスタイル
+      marginTop: "16px",            // 上の要素との間隔
+      width: "100%",                // 横幅を画面全体に
+    }}
+    ></div>
 
     <WebCamera entries={entries} setEntries={setEntries} indexId={indexId} setThema={setThema} setIndexId_thema={setIndexId_thema}></WebCamera>
 
