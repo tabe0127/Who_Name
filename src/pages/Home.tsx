@@ -6,7 +6,7 @@ export default function Home({ setSceneController }: { setSceneController : Reac
   return(
     <>
     <Image src={WhoName} alt={"WhoName"} width={200} />
-    <h2 className="text-2xl"><b><br />人間版なんじゃもんじゃゲーム</b></h2><br />
+    <h2 className="text-2xl"><b><br />人間版ナンジャモンジャゲーム</b></h2><br />
     <p className="text-2xl">カードになるのはあなた自身!!</p><br />
     <p>※このアプリケーションではカメラを使用します。</p><br />
     <div style={{
