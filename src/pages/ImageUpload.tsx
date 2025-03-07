@@ -40,8 +40,11 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
       ));
   };
 
+  // プレイヤー人数に応じて、各プレイヤーごとに必要な写真の枚数を返す関数
+  // 元々、人数に応じて枚数の変更を加えていたが、2025/03/07の話し合いで「2枚で固定で良いのでは？」となった
+  // 正直この関数いらないが、一旦放置
   const getRequiredPhotos = (entries: entries[]): number => {
-    return entries?.length <= 4 ? 3 : 2;
+    return 2
   };  
 
   const nextPlayer = () => {
@@ -122,7 +125,14 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
 
 
 
-    <WebCamera entries={entries} setEntries={setEntries} indexId={indexId} setThema={setThema} setIndexId_thema={setIndexId_thema}></WebCamera>
+    <WebCamera 
+      entries={entries} 
+      setEntries={setEntries} 
+      indexId={indexId} 
+      setThema={setThema} 
+      setIndexId_thema={setIndexId_thema} 
+      getRequiredPhotos={getRequiredPhotos}
+      ></WebCamera>
 
     {/* 画像プレビュー */}
     {entries?.[indexId].imgURL.length > 0 && (

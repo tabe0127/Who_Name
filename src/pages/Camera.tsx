@@ -8,7 +8,16 @@ type entries = {
   imgURL: string[];
 }
 
-const WebCamera = ({ entries, setEntries, indexId, setThema, setIndexId_thema }: { entries: entries[], setEntries: React.Dispatch<React.SetStateAction<entries[]>>, indexId: number, setThema: React.Dispatch<React.SetStateAction<string | null>>, setIndexId_thema: React.Dispatch<React.SetStateAction<number>> }) => {
+type Props = { // WebCamera関数の入力値
+  entries: entries[];
+  setEntries: React.Dispatch<React.SetStateAction<entries[]>>;
+  indexId: number;
+  setThema: React.Dispatch<React.SetStateAction<string | null>>;
+  setIndexId_thema: React.Dispatch<React.SetStateAction<number>>;
+  getRequiredPhotos: (entries: entries[]) => number;
+};
+
+const WebCamera = ({ entries, setEntries, indexId, setThema, setIndexId_thema, getRequiredPhotos  }: Props) => {
   const webcamRef = useRef<Webcam>(null);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
 
@@ -51,6 +60,14 @@ const WebCamera = ({ entries, setEntries, indexId, setThema, setIndexId_thema }:
     }
   };
 
+// 現在の撮影枚数
+const currentPhotos = entries[indexId].imgURL.length;
+// 必要な枚数
+const requiredPhotos = getRequiredPhotos(entries);
+//  残りの撮影枚数（負の値にならないようにする）
+const remainingPhotos = Math.max(0, requiredPhotos - currentPhotos);
+  
+  
   if (hasPermission === null) {
     return <div>カメラの許可を確認中...</div>;
   }
@@ -75,6 +92,8 @@ const WebCamera = ({ entries, setEntries, indexId, setThema, setIndexId_thema }:
         videoConstraints={videoConstraints}
       />
       <button onClick={capture} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg">撮影</button>
+      <p>残りの必要な撮影枚数: {remainingPhotos} 枚</p>
+
     </>
   );
 };
