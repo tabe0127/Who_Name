@@ -49,12 +49,9 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
     const requiredPhotos = getRequiredPhotos(entries);
   
     // 条件付きで処理を実行
-    if (entries[indexId].imgURL.length < requiredPhotos) {
-      alert(`写真を${requiredPhotos}枚以上登録してください`);
-    } else {
-      // プレイヤーを進める
-      setIndexId((prev) => prev + 1);
-    }
+    return entries[indexId].imgURL.length < requiredPhotos
+      ? alert(`写真を${requiredPhotos}枚以上登録してください`)
+      : setIndexId((prev) => prev + 1), window.scrollTo(0, 0); // ページの一番上にスクロール
   };
 
   // お題変更
