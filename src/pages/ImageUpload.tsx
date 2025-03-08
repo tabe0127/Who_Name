@@ -99,8 +99,8 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
     className="mt-4"
     >
       <ul><span className="font-bold">お題にちなんだポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries?.[indexId].name}</span>さんの写真を<span className="text-amber-300 text-2xl font-bold">{indexId === 0 ? entries?.[entries.length - 1].name : entries?.[indexId - 1].name}</span>さんが撮影してね！</ul>
-      <ul>{getRequiredPhotos(entries)}枚以上撮ってください</ul>
-      <ul>全員分の写真が集まったらゲームスタート！</ul>
+      {/* <ul>{getRequiredPhotos(entries)}枚以上撮ってください</ul> */}
+      <ul>全員分の写真が集まったらゲーム開始！</ul>
       {/* <p className="mt-4">ポーズの例</p> */}
       <div
       className="flex flex-wrap justify-center md:flex-col md:items-start"
@@ -121,7 +121,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
     ></div>
 
     <p className="mt-4">お題：「{thema}」</p>
-    <p className="mt-4">「{thema}」にちなんだ写真を撮ってください．</p>
+    <p className="mt-4">にちなんだ写真を撮ってください．</p>
 
     <button type="button" onClick={ThemaChange} className="my-4 p-4 text-white font-bold bg-green-400 rounded-xl shadow-lg mx-2">お題を変更する</button>
 
