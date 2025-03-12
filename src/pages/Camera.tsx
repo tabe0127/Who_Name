@@ -14,7 +14,7 @@ type Props = { // WebCamera関数の入力値
   indexId: number;
   setThema: React.Dispatch<React.SetStateAction<string | null>>;
   setIndexId_thema: React.Dispatch<React.SetStateAction<number>>;
-  getRequiredPhotos: (entries: entries[]) => number;
+  getRequiredPhotos: number;
 };
 
 const WebCamera = ({ entries, setEntries, indexId, setThema, setIndexId_thema, getRequiredPhotos  }: Props) => {
@@ -63,7 +63,7 @@ const WebCamera = ({ entries, setEntries, indexId, setThema, setIndexId_thema, g
 // 現在の撮影枚数
 const currentPhotos = entries?.[indexId].imgURL.length;
 // 必要な枚数
-const requiredPhotos = getRequiredPhotos(entries);
+const requiredPhotos = getRequiredPhotos;
 //  残りの撮影枚数（負の値にならないようにする）
 const remainingPhotos = Math.max(0, requiredPhotos - currentPhotos);
   
