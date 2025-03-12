@@ -40,13 +40,14 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
       ));
   };
 
-  const getRequiredPhotos = (entries: entries[]): number => {
-    return entries?.length <= 4 ? 3 : 2;
-  };  
+  // プレイヤー人数に応じて、各プレイヤーごとに必要な写真の枚数を返す関数
+  // 元々、人数に応じて枚数の変更を加えていたが、2025/03/07の話し合いで「2枚で固定で良いのでは？」となった
+  // 正直この関数いらないが、一旦放置
+  const getRequiredPhotos = 2;
 
   const nextPlayer = () => {
     // 必要な写真枚数を取得
-    const requiredPhotos = getRequiredPhotos(entries);
+    const requiredPhotos = getRequiredPhotos;
   
     // 条件付きで処理を実行
     return entries[indexId].imgURL.length < requiredPhotos
@@ -99,7 +100,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
     className="mt-4"
     >
       <ul><span className="font-bold">お題にちなんだポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries?.[indexId].name}</span>さんの写真を<span className="text-amber-300 text-2xl font-bold">{indexId === 0 ? entries?.[entries.length - 1].name : entries?.[indexId - 1].name}</span>さんが撮影してね！</ul>
-      <ul>{getRequiredPhotos(entries)}枚以上撮ってください</ul>
+      <ul>{getRequiredPhotos}枚以上撮ってください</ul>
       <ul>全員分の写真が集まったらゲームスタート！</ul>
       <p className="mt-4">ポーズの例</p>
       <div
@@ -122,7 +123,14 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
 
 
 
-    <WebCamera entries={entries} setEntries={setEntries} indexId={indexId} setThema={setThema} setIndexId_thema={setIndexId_thema}></WebCamera>
+    <WebCamera 
+      entries={entries} 
+      setEntries={setEntries} 
+      indexId={indexId} 
+      setThema={setThema} 
+      setIndexId_thema={setIndexId_thema} 
+      getRequiredPhotos={getRequiredPhotos}
+      ></WebCamera>
 
     {/* 画像プレビュー */}
     {entries?.[indexId].imgURL.length > 0 && (
