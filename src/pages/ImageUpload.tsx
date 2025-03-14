@@ -106,7 +106,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
       }}
     ></div>
 
-    <p className="mt-4">お題：「{thema}」　にちなんだ写真を撮ってください．</p>
+    <p className="mt-4">お題：「{thema}」</p>
 
     <button type="button" onClick={ThemaChange} className="my-4 p-4 text-white font-bold bg-green-400 rounded-xl shadow-lg mx-2">お題を変更する</button>
 
@@ -179,7 +179,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
       onClick={() => setSceneController('Name')}
       className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
     >
-      {entries?.[indexId].imgURL.length >= 0 && "プレイヤー登録に戻る"}
+      {entries?.[indexId].imgURL.length >= 0 && "参加者登録に戻る"}
     </button>
 
     {indexId < entries?.length - 1 &&
@@ -187,7 +187,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
       onClick={nextPlayer}
       className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
     >
-      次のプレイヤーの写真を登録
+      次の人の写真を登録する
     </button>}
 
     {indexId === entries?.length - 1 && entries?.[indexId].imgURL.length >= 2 && (
@@ -195,7 +195,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
         onClick={() => setSceneController('Game')}
         className="p-4 text-white font-bold bg-red-400 rounded-xl shadow-lg m-2"
       >
-        ゲーム開始
+        ゲームスタート
       </button>
       )}
       </div>
