@@ -76,7 +76,6 @@ export default function Game({ setSceneController, entries }: { setSceneControll
         />
         <p className="text-4xl text-amber-300 font-bold">{randomEntry.name}</p>
       </div>
-      <CountdownTimer timeLeft={timeLeft} setTimeLeft={setTimeLeft} isRunning={isRunning} ></CountdownTimer>
 
       {/* カウントダウン中には表示しない */}
       {/* 初めて表示された画像の場合 */}
@@ -114,6 +113,10 @@ export default function Game({ setSceneController, entries }: { setSceneControll
         Next
       </button>
       </div>
+
+      <br></br>
+
+      <CountdownTimer timeLeft={timeLeft} setTimeLeft={setTimeLeft} isRunning={isRunning} ></CountdownTimer>
     </div>
     </>
   )
