@@ -87,9 +87,9 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
     }}
     className="mt-4"
     >
-      <ul><span className="font-bold">お題にちなんだポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries?.[indexId].name}</span>さんの写真を<span className="text-amber-300 text-2xl font-bold">{indexId === 0 ? entries?.[entries.length - 1].name : entries?.[indexId - 1].name}</span>さんが撮影してね！</ul>
+      <ul><span className="font-bold">お題にちなんだポーズ</span>で<span className="text-amber-300 text-2xl font-bold">{entries?.[indexId].name}</span>さんを<span className="text-amber-300 text-2xl font-bold">{indexId === 0 ? entries?.[entries.length - 1].name : entries?.[indexId - 1].name}</span>さんが撮影してね！</ul>
       {/* <ul>{getRequiredPhotos(entries)}枚以上撮ってください</ul> */}
-      <ul>全員分の写真が集まったらゲームスタート！</ul>
+      <ul>全員分撮影したらゲームスタート！</ul>
       {/* <p className="mt-4">ポーズの例</p> */}
       <div
       className="flex flex-wrap justify-center md:flex-col md:items-start"
@@ -187,7 +187,7 @@ export default function ImageUpload({ setSceneController, entries, setEntries}: 
       onClick={nextPlayer}
       className="p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg m-2"
     >
-      次の人の写真を登録する
+      次の人を登録する
     </button>}
 
     {indexId === entries?.length - 1 && entries?.[indexId].imgURL.length >= 2 && (
