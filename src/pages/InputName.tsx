@@ -48,7 +48,7 @@ export default function InputName({
 
 
       <h1 style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center' }}>
-        参加者登録
+        名前登録
       </h1>
       <p
         style={{
