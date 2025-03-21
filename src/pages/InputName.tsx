@@ -116,7 +116,7 @@ export default function InputName({
         }}
         className="m-5"
       >
-        画像登録に進む
+        画像登録へ進む
       </button>
     </div>
   );
