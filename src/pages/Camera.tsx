@@ -91,7 +91,7 @@ const remainingPhotos = Math.max(0, requiredPhotos - currentPhotos);
         screenshotFormat="image/jpeg"
         videoConstraints={videoConstraints}
       />
-      <button onClick={capture} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg">撮影</button>
+      <button onClick={capture} className="my-4 p-4 text-white font-bold bg-blue-400 rounded-xl shadow-lg">撮影する</button>
       <p>残りの必要な撮影枚数: {remainingPhotos} 枚</p>
 
     </>
